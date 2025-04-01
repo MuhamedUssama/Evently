@@ -28,7 +28,7 @@ class EventlyApp extends StatelessWidget {
             OnBoringScreen.routeName: (_) => OnBoringScreen(),
             LoginScreen.routeName: (_) => LoginScreen(),
           },
-          initialRoute: OnBoringScreen.routeName,
+          initialRoute: LoginScreen.routeName,
         );
       },
     );

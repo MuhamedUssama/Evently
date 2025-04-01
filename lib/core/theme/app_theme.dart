@@ -27,7 +27,57 @@ class AppTheme {
         fontSize: 14.sp,
         fontWeight: FontWeight.w500,
       ),
+      labelMedium: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+        color: grey,
+      ),
+      bodyLarge: TextStyle(
+        color: primary,
+        fontSize: 16.sp,
+        fontWeight: FontWeight.bold,
+        fontStyle: FontStyle.italic,
+        decoration: TextDecoration.underline,
+        decorationColor: primary,
+      ),
+      labelLarge: TextStyle(
+        color: white,
+        fontSize: 20.sp,
+        fontWeight: FontWeight.w500,
+      ),
     ),
+
+    inputDecorationTheme: InputDecorationTheme(
+      focusColor: primary,
+      suffixIconColor: grey,
+      prefixIconColor: grey,
+      hintStyle: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+        color: grey,
+      ),
+      border: OutlineInputBorder(
+        borderSide: BorderSide(color: grey),
+        borderRadius: BorderRadius.circular(16.r),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: grey),
+        borderRadius: BorderRadius.circular(16.r),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: grey),
+        borderRadius: BorderRadius.circular(16.r),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: red),
+        borderRadius: BorderRadius.circular(16.r),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: red),
+        borderRadius: BorderRadius.circular(16.r),
+      ),
+    ),
+
     appBarTheme: const AppBarTheme(
       backgroundColor: backgroundLight,
       elevation: 0,
