@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppTheme {
   static const Color primary = Color(0XFF5669FF);
@@ -14,6 +15,18 @@ class AppTheme {
     primaryColor: primary,
     scaffoldBackgroundColor: backgroundLight,
 
+    textTheme: TextTheme(
+      titleLarge: TextStyle(
+        color: primary,
+        fontSize: 20.sp,
+        fontWeight: FontWeight.bold,
+      ),
+      bodyMedium: TextStyle(
+        color: black,
+        fontSize: 14.sp,
+        fontWeight: FontWeight.w500,
+      ),
+    ),
     appBarTheme: const AppBarTheme(
       backgroundColor: backgroundLight,
       elevation: 0,
