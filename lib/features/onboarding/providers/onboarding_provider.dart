@@ -1,4 +1,3 @@
-import 'package:evently/features/onboarding/model/onboarding_model.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingProvider extends ChangeNotifier {
@@ -21,13 +20,13 @@ class OnboardingProvider extends ChangeNotifier {
   }
 
   void nextPage() {
-    if (_currentPage < OnboardingModel.getOnboarding.length) {
-      _pageController.animateToPage(
-        (_currentPage + 1),
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-    }
+    _currentPage++;
+
+    _pageController.animateToPage(
+      _currentPage,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
   }
 
   void previousPage() {

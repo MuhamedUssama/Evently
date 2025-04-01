@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:evently/features/auth/login/login_screen.dart';
 import 'package:evently/features/onboarding/model/onboarding_model.dart';
 import 'package:evently/features/onboarding/providers/onboarding_provider.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +48,13 @@ class OnboardingBottomWidget extends StatelessWidget {
             IconButton.outlined(
               onPressed: () {
                 provider.nextPage();
+                log('index: ${provider.currentPage}');
+                if (provider.currentPage > 2) {
+                  Navigator.pushReplacementNamed(
+                    context,
+                    LoginScreen.routeName,
+                  );
+                }
               },
               style: IconButton.styleFrom(
                 foregroundColor: Theme.of(context).primaryColor,
