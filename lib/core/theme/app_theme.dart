@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppTheme {
   static const Color primary = Color(0XFF5669FF);
@@ -7,6 +8,7 @@ class AppTheme {
   static const Color black = Color(0XFF1C1C1C);
   static const Color grey = Color(0XFF7B7B7B);
   static const Color red = Color(0XFFFF5659);
+  static const Color whiteDark = Color(0XFFF4EBDC);
 
   static const Color backgroundDark = Color(0XFF101127);
 
@@ -14,6 +16,18 @@ class AppTheme {
     primaryColor: primary,
     scaffoldBackgroundColor: backgroundLight,
 
+    textTheme: TextTheme(
+      titleLarge: TextStyle(
+        color: primary,
+        fontSize: 20.sp,
+        fontWeight: FontWeight.bold,
+      ),
+      bodyMedium: TextStyle(
+        color: black,
+        fontSize: 14.sp,
+        fontWeight: FontWeight.w500,
+      ),
+    ),
     appBarTheme: const AppBarTheme(
       backgroundColor: backgroundLight,
       elevation: 0,
@@ -24,6 +38,19 @@ class AppTheme {
   static ThemeData darkTheme = ThemeData(
     primaryColor: primary,
     scaffoldBackgroundColor: backgroundDark,
+
+    textTheme: TextTheme(
+      titleLarge: TextStyle(
+        color: primary,
+        fontSize: 20.sp,
+        fontWeight: FontWeight.bold,
+      ),
+      bodyMedium: TextStyle(
+        color: whiteDark,
+        fontSize: 14.sp,
+        fontWeight: FontWeight.w500,
+      ),
+    ),
     appBarTheme: const AppBarTheme(
       backgroundColor: backgroundDark,
       elevation: 0,

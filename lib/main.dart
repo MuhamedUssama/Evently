@@ -1,6 +1,8 @@
 import 'package:evently/core/theme/app_theme.dart';
+import 'package:evently/features/auth/login/login_screen.dart';
 import 'package:evently/features/onboarding/onboring_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
   runApp(const EventlyApp());
@@ -11,14 +13,24 @@ class EventlyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Evently',
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.light,
-      routes: {OnBoringScreen.routeName: (_) => OnBoringScreen()},
-      initialRoute: OnBoringScreen.routeName,
+    return ScreenUtilInit(
+      designSize: const Size(393, 841),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return MaterialApp(
+          title: 'Evently',
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkTheme,
+          themeMode: ThemeMode.light,
+          routes: {
+            OnBoringScreen.routeName: (_) => OnBoringScreen(),
+            LoginScreen.routeName: (_) => LoginScreen(),
+          },
+          initialRoute: OnBoringScreen.routeName,
+        );
+      },
     );
   }
 }
