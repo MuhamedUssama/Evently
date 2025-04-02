@@ -28,4 +28,5 @@ class AppIcons {
   static const String loveActive = '${_basePath}love_active.svg';
   static const String profile = '${_basePath}profile.svg';
   static const String profileActive = '${_basePath}profile_active.svg';
+  static const String sun = '${_basePath}sun.svg';
 }
