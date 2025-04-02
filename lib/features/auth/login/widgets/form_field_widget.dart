@@ -3,6 +3,7 @@ import 'package:evently/core/utils/app_assets.dart';
 import 'package:evently/core/utils/app_validator.dart';
 import 'package:evently/core/widgets/custom_button.dart';
 import 'package:evently/core/widgets/custom_text_form_field.dart';
+import 'package:evently/features/auth/forget_password/forget_password_screen.dart';
 import 'package:evently/features/auth/login/provider/login_screen_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -59,7 +60,9 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
               ),
               SizedBox(height: 8.h),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, ForgetPasswordScreen.routeName);
+                },
                 child: Text(
                   'Forget Password?',
                   style: Theme.of(context).textTheme.bodyLarge,

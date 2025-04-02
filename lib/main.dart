@@ -1,3 +1,4 @@
+import 'package:evently/features/auth/forget_password/forget_password_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:evently/core/theme/app_theme.dart';
 import 'package:evently/features/auth/login/login_screen.dart';
@@ -35,6 +36,7 @@ class EventlyApp extends StatelessWidget {
           routes: {
             OnBoringScreen.routeName: (_) => OnBoringScreen(),
             LoginScreen.routeName: (_) => LoginScreen(),
+            ForgetPasswordScreen.routeName: (_) => ForgetPasswordScreen(),
           },
           initialRoute: OnBoringScreen.routeName,
         );

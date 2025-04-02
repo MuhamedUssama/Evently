@@ -11,6 +11,7 @@ class AppSvgs {
   static const String onBoarding2 = '${_basePath}onboarding2.svg';
   static const String onBoarding3 = '${_basePath}onboarding3.svg';
   static const String onBoarding4 = '${_basePath}onboarding4.svg';
+  static const String forgetPassword = '${_basePath}forgetPassword.svg';
 }
 
 class AppIcons {
