@@ -88,6 +88,13 @@ class AppTheme {
       ),
       centerTitle: true,
     ),
+
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      backgroundColor: primary,
+      selectedItemColor: backgroundLight,
+      unselectedItemColor: backgroundLight,
+      enableFeedback: false,
+    ),
   );
 
   static ThemeData darkTheme = ThemeData(

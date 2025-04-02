@@ -42,7 +42,7 @@ class EventlyApp extends StatelessWidget {
             ForgetPasswordScreen.routeName: (_) => ForgetPasswordScreen(),
             HomeScreen.routeName: (_) => HomeScreen(),
           },
-          initialRoute: OnBoringScreen.routeName,
+          initialRoute: HomeScreen.routeName,
         );
       },
     );
