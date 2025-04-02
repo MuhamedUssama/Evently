@@ -21,4 +21,11 @@ class AppValidator {
     }
     return null;
   }
+
+  static String? validateNotEmptyField(String? value) {
+    if (value == null || value.isEmpty) {
+      return "This field can't be empty";
+    }
+    return null;
+  }
 }

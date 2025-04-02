@@ -9,15 +9,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
-class ForgetPasswordScreen extends StatefulWidget {
+class ForgetPasswordScreen extends StatelessWidget {
   static const String routeName = '/forget-password';
   const ForgetPasswordScreen({super.key});
 
-  @override
-  State<ForgetPasswordScreen> createState() => _ForgetPasswordScreenState();
-}
-
-class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

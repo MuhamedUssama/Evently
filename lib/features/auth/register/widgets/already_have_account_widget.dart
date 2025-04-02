@@ -1,9 +1,9 @@
-import 'package:evently/features/auth/register/register_screen.dart';
+import 'package:evently/features/auth/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CreateAccountWidget extends StatelessWidget {
-  const CreateAccountWidget({super.key});
+class AlreadyHaveAccountWidget extends StatelessWidget {
+  const AlreadyHaveAccountWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,19 +11,16 @@ class CreateAccountWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          'Don’t Have Account ?',
+          'Already Have Account ?',
           style: Theme.of(
             context,
           ).textTheme.bodyMedium?.copyWith(fontSize: 16.sp),
         ),
         TextButton(
           onPressed: () {
-            Navigator.pushReplacementNamed(context, RegisterScreen.routeName);
+            Navigator.pushReplacementNamed(context, LoginScreen.routeName);
           },
-          child: Text(
-            'Create Account',
-            style: Theme.of(context).textTheme.bodyLarge,
-          ),
+          child: Text('Login', style: Theme.of(context).textTheme.bodyLarge),
         ),
       ],
     );
