@@ -5,6 +5,7 @@ import 'package:evently/core/widgets/custom_button.dart';
 import 'package:evently/core/widgets/custom_text_form_field.dart';
 import 'package:evently/features/auth/forget_password/forget_password_screen.dart';
 import 'package:evently/features/auth/login/provider/login_screen_provider.dart';
+import 'package:evently/features/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -72,7 +73,10 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
               CustomButton(
                 onPressed: () {
                   if (provider.formKey.currentState!.validate()) {
-                    // Perform login action
+                    Navigator.pushReplacementNamed(
+                      context,
+                      HomeScreen.routeName,
+                    );
                   }
                 },
                 text: 'Login',
