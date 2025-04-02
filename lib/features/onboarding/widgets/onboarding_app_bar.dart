@@ -12,7 +12,7 @@ class OnboardingAppBar extends StatelessWidget implements PreferredSizeWidget {
         AppImages.onboardingLogo,
         height: 50.h,
         width: 160.w,
-        fit: BoxFit.cover,
+        fit: BoxFit.fill,
       ),
       centerTitle: true,
     );

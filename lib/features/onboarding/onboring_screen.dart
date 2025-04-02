@@ -39,6 +39,7 @@ class OnBoringScreen extends StatelessWidget {
               ),
               SizedBox(height: 35.h),
               OnboardingBottomWidget(),
+              SizedBox(height: 16.h),
             ],
           ),
         ),
