@@ -73,8 +73,26 @@ class CreateEventScreen extends StatelessWidget {
                         CustomDateAndTimeWidget(
                           icon: Icons.date_range_outlined,
                           title: 'Event Date',
-                          buttonTitle: 'Choose Date',
-                          onPressed: () {},
+                          buttonTitle:
+                              provider.selectedDate == null
+                                  ? 'Choose Date'
+                                  : provider.dateFormat.format(
+                                    provider.selectedDate!,
+                                  ),
+                          onPressed: () async {
+                            DateTime? date = await showDatePicker(
+                              context: context,
+                              firstDate: DateTime.now(),
+                              lastDate: DateTime.now().add(
+                                const Duration(days: 365),
+                              ),
+                              initialDate: provider.selectedDate,
+                              initialEntryMode:
+                                  DatePickerEntryMode.calendarOnly,
+                            );
+
+                            if (date != null) provider.selectedDate = date;
+                          },
                         ),
                         CustomDateAndTimeWidget(
                           icon: Icons.access_time,
