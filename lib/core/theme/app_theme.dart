@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   static const Color primary = Color(0XFF5669FF);
@@ -17,22 +18,32 @@ class AppTheme {
     scaffoldBackgroundColor: backgroundLight,
 
     textTheme: TextTheme(
-      titleLarge: TextStyle(
+      titleLarge: GoogleFonts.inter(
         color: primary,
         fontSize: 20.sp,
         fontWeight: FontWeight.bold,
       ),
-      bodyMedium: TextStyle(
+      headlineLarge: GoogleFonts.inter(
+        color: backgroundLight,
+        fontSize: 24.sp,
+        fontWeight: FontWeight.bold,
+      ),
+      titleSmall: GoogleFonts.inter(
+        color: backgroundLight,
+        fontSize: 14.sp,
+        fontWeight: FontWeight.w400,
+      ),
+      bodyMedium: GoogleFonts.inter(
         color: black,
         fontSize: 14.sp,
         fontWeight: FontWeight.w500,
       ),
-      labelMedium: TextStyle(
+      labelMedium: GoogleFonts.inter(
         fontSize: 16,
         fontWeight: FontWeight.w500,
         color: grey,
       ),
-      bodyLarge: TextStyle(
+      bodyLarge: GoogleFonts.inter(
         color: primary,
         fontSize: 16.sp,
         fontWeight: FontWeight.bold,
@@ -40,7 +51,7 @@ class AppTheme {
         decoration: TextDecoration.underline,
         decorationColor: primary,
       ),
-      labelLarge: TextStyle(
+      labelLarge: GoogleFonts.inter(
         color: white,
         fontSize: 20.sp,
         fontWeight: FontWeight.w500,
@@ -87,6 +98,13 @@ class AppTheme {
         fontSize: 22,
       ),
       centerTitle: true,
+    ),
+
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      backgroundColor: primary,
+      selectedItemColor: backgroundLight,
+      unselectedItemColor: backgroundLight,
+      enableFeedback: false,
     ),
   );
 
