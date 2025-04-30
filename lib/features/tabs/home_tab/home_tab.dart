@@ -1,5 +1,5 @@
 import 'package:evently/features/tabs/home_tab/provider/home_tab_provider.dart';
-import 'package:evently/features/tabs/home_tab/widgets/event_card_widget.dart';
+import 'package:evently/core/widgets/event_card_widget.dart';
 import 'package:evently/features/tabs/home_tab/widgets/home_tab_header_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
