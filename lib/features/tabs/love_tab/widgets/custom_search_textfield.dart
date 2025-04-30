@@ -1,6 +1,8 @@
 import 'package:evently/core/theme/app_theme.dart';
+import 'package:evently/core/utils/app_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomSearchTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -17,7 +19,7 @@ class CustomSearchTextField extends StatelessWidget {
           fontSize: 14.sp,
           fontWeight: FontWeight.bold,
         ),
-        prefixIcon: Icon(Icons.search_rounded, size: 36),
+        prefixIcon: SvgPicture.asset(AppSvgs.searchIcon, fit: BoxFit.scaleDown),
         prefixIconColor: AppTheme.primary,
         border: OutlineInputBorder(
           borderSide: BorderSide(color: AppTheme.primary),
