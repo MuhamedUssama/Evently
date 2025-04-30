@@ -2,6 +2,25 @@ class AppImages {
   static const String _basePath = 'assets/images/';
   static const String logo = '${_basePath}logo.png';
   static const String onboardingLogo = '${_basePath}onboardingLogo.png';
+
+  static const String sportsCategoryLight =
+      '${_basePath}sports_category_light.png';
+  static const String birthdayCategoryLight =
+      '${_basePath}birthday_category_light.png';
+  static const String meetingCategoryLight =
+      '${_basePath}meeting_category_light.png';
+  static const String gamingCategoryLight =
+      '${_basePath}gaming_category_light.png';
+  static const String eatingCategoryLight =
+      '${_basePath}eating_category_light.png';
+  static const String holidayCategoryLight =
+      '${_basePath}holiday_category_light.png';
+  static const String exhibitionCategoryLight =
+      '${_basePath}exhibition_category_light.png';
+  static const String workshopCategoryLight =
+      '${_basePath}workshop_category_light.png';
+  static const String bookClubCategoryLight =
+      '${_basePath}book_club_category_light.png';
 }
 
 class AppSvgs {
