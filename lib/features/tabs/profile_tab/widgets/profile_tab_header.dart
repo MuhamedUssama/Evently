@@ -10,7 +10,7 @@ class ProfileTabHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 200.h,
+      height: 220.h,
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: AppTheme.primary,

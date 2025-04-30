@@ -14,7 +14,7 @@ class LoveTab extends StatelessWidget {
       create: (context) => LoveTabProvider(),
       child: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          padding: EdgeInsets.only(left: 16.w, right: 16.w, top: 16.h),
           child: Column(
             spacing: 16,
             children: [
