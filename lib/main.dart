@@ -1,5 +1,6 @@
 import 'package:evently/features/auth/forget_password/forget_password_screen.dart';
 import 'package:evently/features/auth/register/register_screen.dart';
+import 'package:evently/features/create_event/create_event_screen.dart';
 import 'package:evently/features/home/home_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:evently/core/theme/app_theme.dart';
@@ -36,11 +37,12 @@ class EventlyApp extends StatelessWidget {
           supportedLocales: [Locale('en'), Locale('ar')],
           locale: Locale('en'),
           routes: {
-            OnBoringScreen.routeName: (_) => OnBoringScreen(),
-            LoginScreen.routeName: (_) => LoginScreen(),
-            RegisterScreen.routeName: (_) => RegisterScreen(),
-            ForgetPasswordScreen.routeName: (_) => ForgetPasswordScreen(),
-            HomeScreen.routeName: (_) => HomeScreen(),
+            OnBoringScreen.routeName: (_) => const OnBoringScreen(),
+            LoginScreen.routeName: (_) => const LoginScreen(),
+            RegisterScreen.routeName: (_) => const RegisterScreen(),
+            ForgetPasswordScreen.routeName: (_) => const ForgetPasswordScreen(),
+            HomeScreen.routeName: (_) => const HomeScreen(),
+            CreateEventScreen.routeName: (_) => const CreateEventScreen(),
           },
           initialRoute: HomeScreen.routeName,
         );
