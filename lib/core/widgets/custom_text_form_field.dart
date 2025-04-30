@@ -8,6 +8,7 @@ class CustomTextFormField extends StatelessWidget {
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final String hintText;
+  final int? maxLines;
 
   const CustomTextFormField({
     super.key,
@@ -18,6 +19,7 @@ class CustomTextFormField extends StatelessWidget {
     this.prefixIcon,
     this.suffixIcon,
     required this.hintText,
+    this.maxLines,
   });
 
   @override
@@ -31,6 +33,7 @@ class CustomTextFormField extends StatelessWidget {
       obscureText: isPassword,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validator,
+      maxLines: maxLines,
       decoration: InputDecoration(
         hintText: hintText,
         prefixIcon: prefixIcon,
