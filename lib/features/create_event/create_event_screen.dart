@@ -97,8 +97,28 @@ class CreateEventScreen extends StatelessWidget {
                         CustomDateAndTimeWidget(
                           icon: Icons.access_time,
                           title: 'Event Time',
-                          buttonTitle: 'Choose Time',
-                          onPressed: () {},
+                          buttonTitle:
+                              provider.timeOfDay == null
+                                  ? 'Choose Time'
+                                  : provider.formatTimeOfDay(
+                                    provider.timeOfDay!,
+                                  ),
+                          onPressed: () async {
+                            TimeOfDay? time = await showTimePicker(
+                              context: context,
+                              initialTime: TimeOfDay.now(),
+                              builder: (BuildContext context, Widget? child) {
+                                return MediaQuery(
+                                  data: MediaQuery.of(
+                                    context,
+                                  ).copyWith(alwaysUse24HourFormat: false),
+                                  child: child!,
+                                );
+                              },
+                            );
+
+                            if (time != null) provider.timeOfDay = time;
+                          },
                         ),
                         const SizedBox(height: 16),
                         Text(

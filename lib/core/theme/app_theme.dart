@@ -130,7 +130,7 @@ class AppTheme {
       }),
       dayForegroundColor: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.selected)) {
-          return Colors.white;
+          return backgroundLight;
         }
         return black;
       }),
@@ -142,10 +142,30 @@ class AppTheme {
       }),
       yearForegroundColor: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.selected)) {
-          return Colors.white;
+          return backgroundLight;
         }
         return black;
       }),
+    ),
+
+    timePickerTheme: TimePickerThemeData(
+      backgroundColor: backgroundLight,
+      hourMinuteTextColor: black,
+      dialBackgroundColor: Colors.grey[200],
+      dialHandColor: primary,
+      cancelButtonStyle: TextButton.styleFrom(foregroundColor: primary),
+      confirmButtonStyle: TextButton.styleFrom(foregroundColor: primary),
+      dayPeriodTextStyle: GoogleFonts.inter(
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w500,
+        color: black,
+      ),
+      dialTextStyle: GoogleFonts.inter(
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w500,
+        color: black,
+        decoration: TextDecoration.none,
+      ),
     ),
 
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
