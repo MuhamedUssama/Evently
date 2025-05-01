@@ -2,6 +2,8 @@ import 'package:evently/features/auth/forget_password/forget_password_screen.dar
 import 'package:evently/features/auth/register/register_screen.dart';
 import 'package:evently/features/create_event/create_event_screen.dart';
 import 'package:evently/features/home/home_screen.dart';
+import 'package:evently/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:evently/core/theme/app_theme.dart';
 import 'package:evently/features/auth/login/login_screen.dart';
@@ -9,7 +11,10 @@ import 'package:evently/features/onboarding/onboring_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   runApp(const EventlyApp());
 }
 

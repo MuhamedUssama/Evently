@@ -45,6 +45,8 @@ dependencies:
   intl: any
   google_fonts: ^6.2.1
   shimmer: ^3.0.0
+  firebase_core: ^3.13.0
+  cloud_firestore: ^5.6.7
 
 dev_dependencies:
   flutter_test:
