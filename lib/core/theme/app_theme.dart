@@ -100,6 +100,74 @@ class AppTheme {
       centerTitle: true,
     ),
 
+    datePickerTheme: DatePickerThemeData(
+      backgroundColor: backgroundLight,
+      headerBackgroundColor: backgroundLight,
+      todayBorder: BorderSide(color: primary, width: 1),
+      cancelButtonStyle: TextButton.styleFrom(foregroundColor: primary),
+      confirmButtonStyle: TextButton.styleFrom(foregroundColor: primary),
+      dayStyle: GoogleFonts.inter(
+        color: black,
+        fontSize: 18.sp,
+        fontWeight: FontWeight.w500,
+      ),
+      weekdayStyle: GoogleFonts.inter(
+        color: black,
+        fontSize: 20.sp,
+        fontWeight: FontWeight.w700,
+      ),
+      yearStyle: GoogleFonts.inter(
+        color: grey,
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w700,
+      ),
+      dividerColor: grey,
+      dayBackgroundColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
+          return primary;
+        }
+        return Colors.transparent;
+      }),
+      dayForegroundColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
+          return backgroundLight;
+        }
+        return black;
+      }),
+      yearBackgroundColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
+          return primary;
+        }
+        return Colors.transparent;
+      }),
+      yearForegroundColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
+          return backgroundLight;
+        }
+        return black;
+      }),
+    ),
+
+    timePickerTheme: TimePickerThemeData(
+      backgroundColor: backgroundLight,
+      hourMinuteTextColor: black,
+      dialBackgroundColor: Colors.grey[200],
+      dialHandColor: primary,
+      cancelButtonStyle: TextButton.styleFrom(foregroundColor: primary),
+      confirmButtonStyle: TextButton.styleFrom(foregroundColor: primary),
+      dayPeriodTextStyle: GoogleFonts.inter(
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w500,
+        color: black,
+      ),
+      dialTextStyle: GoogleFonts.inter(
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w500,
+        color: black,
+        decoration: TextDecoration.none,
+      ),
+    ),
+
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: primary,
       selectedItemColor: backgroundLight,
