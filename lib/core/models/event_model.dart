@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:evently/core/models/category_tab_model.dart';
 
 class Event {
+  static const String collectionName = 'events';
+
   String id;
   CategoryTabModel category;
   String title;

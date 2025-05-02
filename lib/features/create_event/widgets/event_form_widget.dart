@@ -1,16 +1,19 @@
 import 'package:evently/core/utils/app_assets.dart';
 import 'package:evently/core/utils/app_validator.dart';
 import 'package:evently/core/widgets/custom_text_form_field.dart';
+import 'package:evently/features/create_event/provider/create_event_screen_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 class EventFormWidget extends StatelessWidget {
-  const EventFormWidget({super.key});
+  final CreateEventScreenProvider provider;
+  const EventFormWidget({super.key, required this.provider});
 
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: provider.formKey,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
@@ -24,7 +27,7 @@ class EventFormWidget extends StatelessWidget {
               ).textTheme.bodyMedium?.copyWith(fontSize: 16.sp),
             ),
             CustomTextFormField(
-              controller: TextEditingController(),
+              controller: provider.titleController,
               hintText: 'Event Title',
               keyboardType: TextInputType.text,
               prefixIcon: SvgPicture.asset(AppSvgs.edit, fit: BoxFit.scaleDown),
@@ -40,7 +43,7 @@ class EventFormWidget extends StatelessWidget {
               ).textTheme.bodyMedium?.copyWith(fontSize: 16.sp),
             ),
             CustomTextFormField(
-              controller: TextEditingController(),
+              controller: provider.descriptionController,
               hintText: 'Event Description',
               keyboardType: TextInputType.text,
               maxLines: 6,

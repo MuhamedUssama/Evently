@@ -8,17 +8,22 @@ class CreateEventScreenProvider extends ChangeNotifier {
   int currentIndex = 1;
   int startIndex = 1;
 
-  DateTime? selectedDate;
-  DateFormat dateFormat = DateFormat('dd/MM/yyyy');
-
-  TimeOfDay? _timeOfDay;
-
-  TimeOfDay? get timeOfDay => _timeOfDay;
-
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
 
+  DateTime? _selectedDate;
+  DateFormat dateFormat = DateFormat('dd/MM/yyyy');
+
+  DateTime? get selectedDate => _selectedDate;
+  set selectedDate(DateTime? newDate) {
+    _selectedDate = newDate;
+    notifyListeners();
+  }
+
+  TimeOfDay? _timeOfDay;
+
+  TimeOfDay? get timeOfDay => _timeOfDay;
   set timeOfDay(TimeOfDay? newTime) {
     _timeOfDay = newTime;
     notifyListeners();
@@ -38,7 +43,7 @@ class CreateEventScreenProvider extends ChangeNotifier {
     return '$hour:$minuteFormatted $period';
   }
 
-  Future<void> createEvent(CategoryTabModel category) async {
+  Future<void> createEvent() async {
     if (formKey.currentState!.validate() &&
         selectedDate != null &&
         timeOfDay != null) {
@@ -51,12 +56,11 @@ class CreateEventScreenProvider extends ChangeNotifier {
       );
 
       Event event = Event(
-        category: category,
+        category: CategoryTabModel.tabs[currentIndex],
         title: titleController.text,
         description: descriptionController.text,
         dateTime: dateTime,
       );
-
       await FirebaseServices.addEventToFireStore(event);
     }
   }
