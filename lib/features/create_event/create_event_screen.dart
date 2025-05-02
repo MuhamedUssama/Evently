@@ -19,6 +19,7 @@ class CreateEventScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => CreateEventScreenProvider(),
+
       child: Scaffold(
         appBar: AppBar(
           title: Text('Create Event'),
@@ -64,7 +65,7 @@ class CreateEventScreen extends StatelessWidget {
                           CategoryTabModel.tabs.length - provider.startIndex,
                     ),
                   ),
-                  EventFormWidget(),
+                  EventFormWidget(provider: provider),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Column(
@@ -130,7 +131,12 @@ class CreateEventScreen extends StatelessWidget {
                         const SizedBox(height: 8),
                         ChooseLocationButton(onPressed: () {}),
                         const SizedBox(height: 16),
-                        CustomButton(text: 'Add Event', onPressed: () {}),
+                        CustomButton(
+                          text: 'Add Event',
+                          onPressed: () {
+                            provider.createEvent();
+                          },
+                        ),
                         const SizedBox(height: 16),
                       ],
                     ),
