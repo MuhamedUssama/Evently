@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:evently/core/models/category_tab_model.dart';
 import 'package:evently/core/theme/app_theme.dart';
 import 'package:evently/core/widgets/custom_button.dart';
@@ -134,7 +136,15 @@ class CreateEventScreen extends StatelessWidget {
                         CustomButton(
                           text: 'Add Event',
                           onPressed: () {
-                            provider.createEvent();
+                            provider
+                                .createEvent()
+                                .then((_) {
+                                  // ignore: use_build_context_synchronously
+                                  Navigator.pop(context);
+                                })
+                                .catchError((_) {
+                                  log('Faild to create event');
+                                });
                           },
                         ),
                         const SizedBox(height: 16),
