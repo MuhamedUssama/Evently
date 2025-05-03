@@ -1,10 +1,13 @@
+import 'package:evently/core/models/event_model.dart';
 import 'package:evently/core/theme/app_theme.dart';
-import 'package:evently/core/utils/app_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 
 class EventCardWidget extends StatelessWidget {
-  const EventCardWidget({super.key});
+  final Event event;
+
+  const EventCardWidget({super.key, required this.event});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +18,7 @@ class EventCardWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: AppTheme.primary, width: 1),
         image: DecorationImage(
-          image: AssetImage(AppImages.meetingCategoryLight),
+          image: AssetImage(event.category.lightImagePath!),
           fit: BoxFit.cover,
         ),
       ),
@@ -34,9 +37,12 @@ class EventCardWidget extends StatelessWidget {
             ),
             child: Column(
               children: [
-                Text('21', style: Theme.of(context).textTheme.titleLarge),
                 Text(
-                  'Nov',
+                  '${event.dateTime.day}',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                Text(
+                  DateFormat('MMM').format(event.dateTime),
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: AppTheme.primary,
                     fontWeight: FontWeight.w700,
@@ -47,7 +53,7 @@ class EventCardWidget extends StatelessWidget {
           ),
           Container(
             width: double.infinity,
-            padding: EdgeInsets.all(8),
+            padding: EdgeInsets.symmetric(horizontal: 8),
             margin: EdgeInsets.all(8),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8.r),
@@ -58,7 +64,7 @@ class EventCardWidget extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    'Meeting for Updating The Development Method',
+                    event.description,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.w700,
                     ),
