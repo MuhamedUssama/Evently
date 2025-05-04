@@ -1,3 +1,4 @@
+import 'package:evently/core/theme/app_theme.dart';
 import 'package:evently/features/tabs/home_tab/provider/home_tab_provider.dart';
 import 'package:evently/core/widgets/event_card_widget.dart';
 import 'package:evently/features/tabs/home_tab/widgets/home_tab_header_widget.dart';
@@ -14,18 +15,29 @@ class HomeTab extends StatelessWidget {
       create: (context) => HomeTabProvider(),
       child: DefaultTabController(
         length: 10,
-        child: Column(
-          children: [
-            HomeTabHeaderWidget(),
-            Expanded(
-              child: ListView.separated(
-                padding: EdgeInsets.all(16),
-                itemBuilder: (context, index) => EventCardWidget(),
-                separatorBuilder: (context, index) => SizedBox(height: 16.h),
-                itemCount: 5,
-              ),
-            ),
-          ],
+        child: Consumer<HomeTabProvider>(
+          builder: (context, provider, child) {
+            return Column(
+              children: [
+                HomeTabHeaderWidget(),
+                Expanded(
+                  child: RefreshIndicator(
+                    color: AppTheme.primary,
+                    onRefresh: () => provider.getEvents(),
+                    child: ListView.separated(
+                      padding: EdgeInsets.all(16),
+                      itemBuilder: (context, index) {
+                        return EventCardWidget(event: provider.events[index]);
+                      },
+                      separatorBuilder:
+                          (context, index) => SizedBox(height: 16.h),
+                      itemCount: provider.events.length,
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );

@@ -19,13 +19,13 @@ class LoveTab extends StatelessWidget {
             spacing: 16,
             children: [
               CustomSearchTextField(controller: TextEditingController()),
-              Expanded(
-                child: ListView.separated(
-                  itemBuilder: (context, index) => EventCardWidget(),
-                  separatorBuilder: (context, index) => SizedBox(height: 16.h),
-                  itemCount: 5,
-                ),
-              ),
+              // Expanded(
+              //   child: ListView.separated(
+              //     itemBuilder: (context, index) => EventCardWidget(),
+              //     separatorBuilder: (context, index) => SizedBox(height: 16.h),
+              //     itemCount: 5,
+              //   ),
+              // ),
             ],
           ),
         ),
