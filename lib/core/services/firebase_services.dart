@@ -18,11 +18,20 @@ class FirebaseServices {
     await doc.set(event);
   }
 
-  static Future<List<Event>> getEventsFromFireStore() async {
+  static Future<List<Event>> getEventsFromFireStore(String categoryId) async {
     CollectionReference<Event> collection = getEventsCollection();
 
-    QuerySnapshot<Event> querySnapshot =
-        await collection.orderBy('dateTime').get();
+    late QuerySnapshot<Event> querySnapshot;
+
+    if (categoryId == '1') {
+      querySnapshot = await collection.orderBy('dateTime').get();
+    } else {
+      querySnapshot =
+          await collection
+              .where('categoryId', isEqualTo: categoryId)
+              .orderBy('dateTime')
+              .get();
+    }
 
     return querySnapshot.docs.map((doc) => doc.data()).toList();
   }
