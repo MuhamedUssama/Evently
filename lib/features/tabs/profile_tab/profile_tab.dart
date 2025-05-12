@@ -1,4 +1,6 @@
+import 'package:evently/core/services/firebase_services.dart';
 import 'package:evently/core/theme/app_theme.dart';
+import 'package:evently/features/auth/login/login_screen.dart';
 import 'package:evently/features/tabs/profile_tab/widgets/profile_tab_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,7 +20,14 @@ class ProfileTab extends StatelessWidget {
           child: Column(
             children: [
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  await FirebaseServices.logout();
+                  Navigator.pushReplacementNamed(
+                    // ignore: use_build_context_synchronously
+                    context,
+                    LoginScreen.routeName,
+                  );
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppTheme.red,
                   foregroundColor: AppTheme.white,

@@ -17,12 +17,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  runApp(
-    ChangeNotifierProvider(
-      create: (context) => UserProvider(),
-      child: const EventlyApp(),
-    ),
-  );
+  runApp(const EventlyApp());
 }
 
 class EventlyApp extends StatelessWidget {
@@ -53,7 +48,12 @@ class EventlyApp extends StatelessWidget {
             LoginScreen.routeName: (_) => const LoginScreen(),
             RegisterScreen.routeName: (_) => const RegisterScreen(),
             ForgetPasswordScreen.routeName: (_) => const ForgetPasswordScreen(),
-            HomeScreen.routeName: (_) => const HomeScreen(),
+            HomeScreen.routeName:
+                (_) => ChangeNotifierProvider(
+                  create: (context) => UserProvider(),
+
+                  child: const HomeScreen(),
+                ),
             CreateEventScreen.routeName: (_) => const CreateEventScreen(),
           },
           initialRoute: RegisterScreen.routeName,

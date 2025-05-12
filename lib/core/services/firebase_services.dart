@@ -104,4 +104,12 @@ class FirebaseServices {
       return null;
     }
   }
+
+  static Future<void> logout() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+    } catch (error) {
+      log('Error signing out: $error');
+    }
+  }
 }

@@ -11,11 +11,6 @@ class UserProvider with ChangeNotifier {
     getCurrentUser();
   }
 
-  void updateCurrentUser(UserModel user) {
-    currentUser = user;
-    notifyListeners();
-  }
-
   Future<void> getCurrentUser() async {
     log('Getting current user');
     currentUser = await FirebaseServices.getCurrentUserData();
