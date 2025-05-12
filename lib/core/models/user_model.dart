@@ -18,7 +18,7 @@ class UserModel {
       id: json['id'] as String,
       name: json['name'] as String,
       email: json['email'] as String,
-      favourateEventsIds: json['favourateEventsIds'] as List<String>,
+      favourateEventsIds: (json['favourateEventsIds'] as List).cast<String>(),
     );
   }
 

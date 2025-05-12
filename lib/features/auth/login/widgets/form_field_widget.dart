@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:evently/core/theme/app_theme.dart';
 import 'package:evently/core/utils/app_assets.dart';
 import 'package:evently/core/utils/app_validator.dart';
@@ -21,70 +23,91 @@ class FormFieldWidget extends StatefulWidget {
 class _FormFieldWidgetState extends State<FormFieldWidget> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<LoginScreenProvider>(
-      builder: (context, provider, child) {
-        return Form(
-          key: provider.formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              CustomTextFormField(
-                hintText: 'Email',
-                controller: provider.emailController,
-                keyboardType: TextInputType.emailAddress,
-                prefixIcon: SvgPicture.asset(
-                  AppIcons.email,
-                  fit: BoxFit.scaleDown,
-                ),
-                validator: (value) => AppValidator.validateEmail(value),
-              ),
-              SizedBox(height: 16.h),
-              CustomTextFormField(
-                hintText: 'Password',
-                controller: provider.passwordController,
-                keyboardType: TextInputType.visiblePassword,
-                isPassword: !provider.isPasswordVisible,
-                suffixIcon: IconButton(
-                  onPressed: provider.togglePasswordVisibility,
-                  icon: Icon(
-                    provider.isPasswordVisible
-                        ? Icons.visibility
-                        : Icons.visibility_off,
-                    color: AppTheme.grey,
+    return Column(
+      children: [
+        Consumer<LoginScreenProvider>(
+          builder: (context, provider, child) {
+            return Form(
+              key: provider.formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  CustomTextFormField(
+                    hintText: 'Email',
+                    controller: provider.emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    prefixIcon: SvgPicture.asset(
+                      AppIcons.email,
+                      fit: BoxFit.scaleDown,
+                    ),
+                    validator: (value) => AppValidator.validateEmail(value),
                   ),
-                ),
-                prefixIcon: SvgPicture.asset(
-                  AppIcons.password,
-                  fit: BoxFit.scaleDown,
-                ),
-                validator: (value) => AppValidator.validatePassword(value),
+                  SizedBox(height: 16.h),
+                  CustomTextFormField(
+                    hintText: 'Password',
+                    controller: provider.passwordController,
+                    keyboardType: TextInputType.visiblePassword,
+                    isPassword: !provider.isPasswordVisible,
+                    suffixIcon: IconButton(
+                      onPressed: provider.togglePasswordVisibility,
+                      icon: Icon(
+                        provider.isPasswordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                        color: AppTheme.grey,
+                      ),
+                    ),
+                    prefixIcon: SvgPicture.asset(
+                      AppIcons.password,
+                      fit: BoxFit.scaleDown,
+                    ),
+                    validator: (value) => AppValidator.validatePassword(value),
+                  ),
+                  SizedBox(height: 8.h),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(
+                        context,
+                        ForgetPasswordScreen.routeName,
+                      );
+                    },
+                    child: Text(
+                      'Forget Password?',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ),
+                  SizedBox(height: 8.h),
+                ],
               ),
-              SizedBox(height: 8.h),
-              TextButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, ForgetPasswordScreen.routeName);
-                },
-                child: Text(
-                  'Forget Password?',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-              ),
-              SizedBox(height: 8.h),
-              CustomButton(
-                onPressed: () {
-                  if (provider.formKey.currentState!.validate()) {
-                    Navigator.pushReplacementNamed(
-                      context,
-                      HomeScreen.routeName,
-                    );
-                  }
-                },
-                text: 'Login',
-              ),
-            ],
-          ),
-        );
-      },
+            );
+          },
+        ),
+        CustomButton(
+          onPressed: () {
+            final provider = Provider.of<LoginScreenProvider>(
+              context,
+              listen: false,
+            );
+            if (provider.formKey.currentState!.validate()) {
+              provider
+                  .login()
+                  .then((success) {
+                    if (success) {
+                      Navigator.pushReplacementNamed(
+                        // ignore: use_build_context_synchronously
+                        context,
+                        HomeScreen.routeName,
+                      );
+                    }
+                  })
+                  .catchError((error) {
+                    log('Login error: $error');
+                  });
+            }
+          },
+          text: 'Login',
+        ),
+      ],
     );
   }
 }

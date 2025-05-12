@@ -17,7 +17,7 @@ class RegisterScreenProvider extends ChangeNotifier {
   Future<bool> register() async {
     if (formKey.currentState!.validate()) {
       try {
-        FirebaseServices.register(
+        await FirebaseServices.register(
           name: nameController.text,
           email: emailController.text,
           password: passwordController.text,
