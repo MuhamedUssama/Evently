@@ -1,4 +1,5 @@
 import 'package:evently/core/models/category_tab_model.dart';
+import 'package:evently/core/providers/user_provider.dart';
 import 'package:evently/core/theme/app_theme.dart';
 import 'package:evently/core/utils/app_assets.dart';
 import 'package:evently/features/tabs/home_tab/provider/home_tab_provider.dart';
@@ -41,7 +42,11 @@ class HomeTabHeaderWidget extends StatelessWidget {
                             style: Theme.of(context).textTheme.titleSmall,
                           ),
                           Text(
-                            'Mohamed Osama',
+                            Provider.of<UserProvider>(
+                                  context,
+                                ).currentUser?.name ??
+                                'User',
+
                             style: Theme.of(context).textTheme.headlineLarge,
                           ),
                         ],

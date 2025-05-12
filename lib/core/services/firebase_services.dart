@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:evently/core/models/event_model.dart';
 import 'package:evently/core/models/user_model.dart';
@@ -81,5 +83,25 @@ class FirebaseServices {
         await usersCollection.doc(credential.user!.uid).get();
 
     return docSnapShot.data()!;
+  }
+
+  static Future<UserModel?> getCurrentUserData() async {
+    try {
+      User? currentUser = FirebaseAuth.instance.currentUser;
+
+      if (currentUser != null) {
+        CollectionReference<UserModel> usersCollection = getUsersCollection();
+
+        DocumentSnapshot<UserModel> docSnapShot =
+            await usersCollection.doc(currentUser.uid).get();
+
+        return docSnapShot.data();
+      }
+
+      return null;
+    } catch (error) {
+      log('Error getting user data: ${error.toString()}');
+      return null;
+    }
   }
 }

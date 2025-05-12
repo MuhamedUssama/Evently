@@ -1,13 +1,17 @@
+import 'package:evently/core/models/user_model.dart';
+import 'package:evently/core/providers/user_provider.dart';
 import 'package:evently/core/theme/app_theme.dart';
 import 'package:evently/core/utils/app_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class ProfileTabHeader extends StatelessWidget {
   const ProfileTabHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
+    UserModel? user = Provider.of<UserProvider>(context).currentUser;
     return Container(
       width: double.infinity,
       height: 220.h,
@@ -43,11 +47,11 @@ class ProfileTabHeader extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Mohamed Osama',
+                    user?.name ?? 'User',
                     style: Theme.of(context).textTheme.headlineLarge,
                   ),
                   Text(
-                    'mohamed.route10@gmail.com',
+                    user?.email ?? 'email',
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: Theme.of(context).scaffoldBackgroundColor,
                       fontSize: 16.sp,
