@@ -1,3 +1,4 @@
+import 'package:evently/core/providers/user_provider.dart';
 import 'package:evently/features/auth/forget_password/forget_password_screen.dart';
 import 'package:evently/features/auth/register/register_screen.dart';
 import 'package:evently/features/create_event/create_event_screen.dart';
@@ -10,12 +11,18 @@ import 'package:evently/features/auth/login/login_screen.dart';
 import 'package:evently/features/onboarding/onboring_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  runApp(const EventlyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => UserProvider(),
+      child: const EventlyApp(),
+    ),
+  );
 }
 
 class EventlyApp extends StatelessWidget {
@@ -49,7 +56,7 @@ class EventlyApp extends StatelessWidget {
             HomeScreen.routeName: (_) => const HomeScreen(),
             CreateEventScreen.routeName: (_) => const CreateEventScreen(),
           },
-          initialRoute: HomeScreen.routeName,
+          initialRoute: RegisterScreen.routeName,
         );
       },
     );

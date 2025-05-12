@@ -19,7 +19,7 @@ class CustomTextFormField extends StatelessWidget {
     this.prefixIcon,
     this.suffixIcon,
     required this.hintText,
-    this.maxLines,
+    this.maxLines = 1,
   });
 
   @override

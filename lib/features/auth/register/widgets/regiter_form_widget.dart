@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:evently/core/utils/app_assets.dart';
 import 'package:evently/core/utils/app_validator.dart';
 import 'package:evently/core/widgets/custom_button.dart';
 import 'package:evently/core/widgets/custom_text_form_field.dart';
+import 'package:evently/features/auth/login/login_screen.dart';
 import 'package:evently/features/auth/register/provider/register_screen_provider.dart';
 import 'package:evently/features/auth/register/widgets/already_have_account_widget.dart';
 import 'package:flutter/material.dart';
@@ -14,13 +17,13 @@ class RegiterFormWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<RegisterScreenProvider>(
-      builder: (context, provider, child) {
-        return Column(
-          spacing: 16.h,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Form(
+    return Column(
+      spacing: 16.h,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Consumer<RegisterScreenProvider>(
+          builder: (context, provider, child) {
+            return Form(
               key: provider.formKey,
               child: Column(
                 spacing: 16.h,
@@ -90,12 +93,31 @@ class RegiterFormWidget extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
-            CustomButton(onPressed: () {}, text: 'Create Account'),
-            AlreadyHaveAccountWidget(),
-          ],
-        );
-      },
+            );
+          },
+        ),
+        CustomButton(
+          onPressed: () {
+            Provider.of<RegisterScreenProvider>(context, listen: false)
+                .register()
+                .then((success) {
+                  if (success) {
+                    Navigator.pushReplacementNamed(
+                      // ignore: use_build_context_synchronously
+                      context,
+                      LoginScreen.routeName,
+                    );
+                  }
+                })
+                .catchError((error) {
+                  log(error.toString());
+                  return null;
+                });
+          },
+          text: 'Create Account',
+        ),
+        AlreadyHaveAccountWidget(),
+      ],
     );
   }
 }

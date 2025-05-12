@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:evently/core/services/firebase_services.dart';
 import 'package:flutter/material.dart';
 
 class RegisterScreenProvider extends ChangeNotifier {
@@ -10,6 +13,23 @@ class RegisterScreenProvider extends ChangeNotifier {
 
   bool obscurePassword = true;
   bool obscureRePassword = true;
+
+  Future<bool> register() async {
+    if (formKey.currentState!.validate()) {
+      try {
+        FirebaseServices.register(
+          name: nameController.text,
+          email: emailController.text,
+          password: passwordController.text,
+        );
+        return true;
+      } catch (error) {
+        log('Registration error: $error');
+        return false;
+      }
+    }
+    return false;
+  }
 
   String? validateRePassword(String? value) {
     if (passwordController.text != value) {
