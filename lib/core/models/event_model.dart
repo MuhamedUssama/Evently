@@ -10,6 +10,8 @@ class Event {
   String userId;
   String description;
   DateTime dateTime;
+  double lat;
+  double long;
 
   Event({
     this.id = '',
@@ -18,6 +20,8 @@ class Event {
     required this.description,
     required this.dateTime,
     required this.userId,
+    this.lat = 0.0,
+    this.long = 0.0,
   });
 
   Map<String, dynamic> toJson() => {
@@ -27,6 +31,8 @@ class Event {
     'description': description,
     'dateTime': Timestamp.fromDate(dateTime),
     'userId': userId,
+    'lat': lat,
+    'long': long,
   };
 
   Event.fromJson(Map<String, dynamic> json)
@@ -39,5 +45,7 @@ class Event {
         ),
         dateTime: (json['dateTime'] as Timestamp).toDate(),
         userId: json['userId'],
+        lat: json['lat'] ?? 0.0,
+        long: json['long'] ?? 0.0,
       );
 }

@@ -2,6 +2,8 @@ import 'package:evently/core/providers/user_provider.dart';
 import 'package:evently/features/auth/forget_password/forget_password_screen.dart';
 import 'package:evently/features/auth/register/register_screen.dart';
 import 'package:evently/features/create_event/create_event_screen.dart';
+import 'package:evently/features/create_event/pick_location_screen.dart';
+import 'package:evently/features/create_event/provider/create_event_screen_provider.dart';
 import 'package:evently/features/home/home_screen.dart';
 import 'package:evently/features/tabs/maps_tab/provider/maps_tab_provider.dart';
 import 'package:evently/firebase_options.dart';
@@ -61,6 +63,13 @@ class EventlyApp extends StatelessWidget {
                   child: const HomeScreen(),
                 ),
             CreateEventScreen.routeName: (_) => const CreateEventScreen(),
+            PickLocationScreen.routeName: (context) {
+              CreateEventScreenProvider provider =
+                  ModalRoute.of(context)?.settings.arguments
+                      as CreateEventScreenProvider;
+
+              return PickLocationScreen(provider: provider);
+            },
           },
           initialRoute: _getInitialRoute(),
         );

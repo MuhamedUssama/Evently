@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:evently/core/models/category_tab_model.dart';
 import 'package:evently/core/theme/app_theme.dart';
 import 'package:evently/core/widgets/custom_button.dart';
+import 'package:evently/features/create_event/pick_location_screen.dart';
 import 'package:evently/features/create_event/provider/create_event_screen_provider.dart';
 import 'package:evently/features/create_event/widgets/category_image_widget.dart';
 import 'package:evently/features/create_event/widgets/category_tab_item.dart';
@@ -131,7 +132,16 @@ class CreateEventScreen extends StatelessWidget {
                           ).textTheme.bodyMedium?.copyWith(fontSize: 16.sp),
                         ),
                         const SizedBox(height: 8),
-                        ChooseLocationButton(onPressed: () {}),
+                        ChooseLocationButton(
+                          provider: provider,
+                          onPressed: () {
+                            Navigator.pushNamed(
+                              context,
+                              PickLocationScreen.routeName,
+                              arguments: provider,
+                            );
+                          },
+                        ),
                         const SizedBox(height: 16),
                         CustomButton(
                           text: 'Add Event',
