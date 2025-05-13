@@ -7,6 +7,7 @@ class Event {
   String id;
   CategoryTabModel category;
   String title;
+  String userId;
   String description;
   DateTime dateTime;
 
@@ -16,6 +17,7 @@ class Event {
     required this.title,
     required this.description,
     required this.dateTime,
+    required this.userId,
   });
 
   Map<String, dynamic> toJson() => {
@@ -24,6 +26,7 @@ class Event {
     'title': title,
     'description': description,
     'dateTime': Timestamp.fromDate(dateTime),
+    'userId': userId,
   };
 
   Event.fromJson(Map<String, dynamic> json)
@@ -35,5 +38,6 @@ class Event {
           (category) => category.id == json['categoryId'],
         ),
         dateTime: (json['dateTime'] as Timestamp).toDate(),
+        userId: json['userId'],
       );
 }

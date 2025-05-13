@@ -1,5 +1,9 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:evently/core/models/event_model.dart';
+import 'package:evently/core/models/user_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class FirebaseServices {
   static CollectionReference<Event> getEventsCollection() => FirebaseFirestore
@@ -9,6 +13,15 @@ class FirebaseServices {
         fromFirestore: (snapshot, options) => Event.fromJson(snapshot.data()!),
         toFirestore: (event, options) => event.toJson(),
       );
+
+  static CollectionReference<UserModel> getUsersCollection() =>
+      FirebaseFirestore.instance
+          .collection(UserModel.collectionName)
+          .withConverter<UserModel>(
+            fromFirestore:
+                (snapshot, options) => UserModel.fromJson(snapshot.data()!),
+            toFirestore: (user, options) => user.toJson(),
+          );
 
   static Future<void> addEventToFireStore(Event event) async {
     CollectionReference<Event> collection = getEventsCollection();
@@ -34,5 +47,69 @@ class FirebaseServices {
     }
 
     return querySnapshot.docs.map((doc) => doc.data()).toList();
+  }
+
+  static Future<UserModel> register({
+    required String name,
+    required String email,
+    required String password,
+  }) async {
+    UserCredential credential = await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(email: email, password: password);
+
+    UserModel user = UserModel(
+      id: credential.user!.uid,
+      name: name,
+      email: email,
+      favourateEventsIds: [],
+    );
+
+    CollectionReference<UserModel> usersCollection = getUsersCollection();
+    await usersCollection.doc(credential.user!.uid).set(user);
+
+    return user;
+  }
+
+  static Future<UserModel> login({
+    required String email,
+    required String password,
+  }) async {
+    UserCredential credential = await FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: email, password: password);
+
+    CollectionReference<UserModel> usersCollection = getUsersCollection();
+
+    DocumentSnapshot<UserModel> docSnapShot =
+        await usersCollection.doc(credential.user!.uid).get();
+
+    return docSnapShot.data()!;
+  }
+
+  static Future<UserModel?> getCurrentUserData() async {
+    try {
+      User? currentUser = FirebaseAuth.instance.currentUser;
+
+      if (currentUser != null) {
+        CollectionReference<UserModel> usersCollection = getUsersCollection();
+
+        DocumentSnapshot<UserModel> docSnapShot =
+            await usersCollection.doc(currentUser.uid).get();
+
+        return docSnapShot.data();
+      }
+
+      return null;
+    } catch (error) {
+      log('Error getting user data: ${error.toString()}');
+      return null;
+    }
+  }
+
+  static Future<void> logout() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+    } catch (error) {
+      log('Error signing out: $error');
+    }
   }
 }

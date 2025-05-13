@@ -17,6 +17,14 @@ class AppTheme {
     primaryColor: primary,
     scaffoldBackgroundColor: backgroundLight,
 
+    indicatorColor: primary,
+
+    textSelectionTheme: TextSelectionThemeData(
+      cursorColor: primary,
+      selectionColor: primary.withValues(alpha: .5),
+      selectionHandleColor: primary,
+    ),
+
     textTheme: TextTheme(
       titleLarge: GoogleFonts.inter(
         color: primary,

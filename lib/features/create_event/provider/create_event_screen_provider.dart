@@ -1,6 +1,7 @@
 import 'package:evently/core/models/category_tab_model.dart';
 import 'package:evently/core/models/event_model.dart';
 import 'package:evently/core/services/firebase_services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -56,6 +57,7 @@ class CreateEventScreenProvider extends ChangeNotifier {
       );
 
       Event event = Event(
+        userId: FirebaseAuth.instance.currentUser?.uid ?? '',
         category: CategoryTabModel.tabs[currentIndex],
         title: titleController.text,
         description: descriptionController.text,

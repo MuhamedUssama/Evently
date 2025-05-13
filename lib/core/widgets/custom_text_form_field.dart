@@ -19,7 +19,7 @@ class CustomTextFormField extends StatelessWidget {
     this.prefixIcon,
     this.suffixIcon,
     required this.hintText,
-    this.maxLines,
+    this.maxLines = 1,
   });
 
   @override
@@ -32,6 +32,7 @@ class CustomTextFormField extends StatelessWidget {
       keyboardType: keyboardType,
       obscureText: isPassword,
       autovalidateMode: AutovalidateMode.onUserInteraction,
+      onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
       validator: validator,
       maxLines: maxLines,
       decoration: InputDecoration(

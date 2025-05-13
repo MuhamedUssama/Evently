@@ -1,4 +1,4 @@
-import 'package:evently/core/widgets/event_card_widget.dart';
+// import 'package:evently/core/widgets/event_card_widget.dart';
 import 'package:evently/features/tabs/love_tab/provider/love_tab_provider.dart';
 import 'package:evently/features/tabs/love_tab/widgets/custom_search_textfield.dart';
 import 'package:flutter/material.dart';
