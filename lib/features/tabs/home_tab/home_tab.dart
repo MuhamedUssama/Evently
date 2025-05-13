@@ -19,7 +19,7 @@ class HomeTab extends StatelessWidget {
           builder: (context, provider, child) {
             return Column(
               children: [
-                HomeTabHeaderWidget(),
+                HomeTabHeaderWidget(provider: provider),
                 Expanded(
                   child: RefreshIndicator(
                     color: AppTheme.primary,

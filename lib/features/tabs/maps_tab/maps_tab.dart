@@ -1,6 +1,8 @@
 import 'package:evently/core/theme/app_theme.dart';
 import 'package:evently/features/tabs/maps_tab/provider/maps_tab_provider.dart';
+import 'package:evently/features/tabs/maps_tab/widgets/event_card_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -11,16 +13,47 @@ class MapsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     MapsTabProvider provider = Provider.of<MapsTabProvider>(context);
     return Scaffold(
-      body: Column(
+      body: Stack(
+        alignment: Alignment.bottomCenter,
         children: [
-          Expanded(
-            child: GoogleMap(
-              initialCameraPosition: provider.cameraPosition,
-              onMapCreated: (controller) {
-                provider.googleMapController = controller;
+          Column(
+            children: [
+              Expanded(
+                child: GoogleMap(
+                  initialCameraPosition: provider.cameraPosition,
+                  onMapCreated: (controller) {
+                    provider.googleMapController = controller;
+                  },
+                  mapType: MapType.normal,
+                  markers: provider.markers,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 160,
+            child: ListView.separated(
+              padding: EdgeInsets.all(16),
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) {
+                return InkWell(
+                  onTap: () {
+                    provider.changCameraPosition(
+                      LatLng(
+                        provider.events[index].lat,
+                        provider.events[index].long,
+                      ),
+                      provider.events[index].title,
+                    );
+                  },
+                  child: EventCardItem(
+                    event: provider.events[index],
+                    provider: provider,
+                  ),
+                );
               },
-              mapType: MapType.normal,
-              markers: provider.markers,
+              separatorBuilder: (context, index) => SizedBox(width: 16.h),
+              itemCount: provider.events.length,
             ),
           ),
         ],

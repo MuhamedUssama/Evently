@@ -10,7 +10,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 class HomeTabHeaderWidget extends StatelessWidget {
-  const HomeTabHeaderWidget({super.key});
+  final HomeTabProvider provider;
+  const HomeTabHeaderWidget({super.key, required this.provider});
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +63,7 @@ class HomeTabHeaderWidget extends StatelessWidget {
                     children: [
                       SvgPicture.asset(AppIcons.maps),
                       Text(
-                        'Cairo, Egypt',
+                        '${provider.city}, ${provider.country}',
                         style: Theme.of(context).textTheme.titleSmall,
                       ),
                     ],

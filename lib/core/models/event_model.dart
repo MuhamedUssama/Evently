@@ -45,7 +45,7 @@ class Event {
         ),
         dateTime: (json['dateTime'] as Timestamp).toDate(),
         userId: json['userId'],
-        lat: json['lat'] ?? 0.0,
-        long: json['long'] ?? 0.0,
+        lat: json['lat'] ?? 37.42796133580664,
+        long: json['long'] ?? -122.085749655962,
       );
 }
