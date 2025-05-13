@@ -4,6 +4,7 @@ import 'package:evently/features/auth/register/register_screen.dart';
 import 'package:evently/features/create_event/create_event_screen.dart';
 import 'package:evently/features/home/home_screen.dart';
 import 'package:evently/firebase_options.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:evently/core/theme/app_theme.dart';
@@ -51,14 +52,18 @@ class EventlyApp extends StatelessWidget {
             HomeScreen.routeName:
                 (_) => ChangeNotifierProvider(
                   create: (context) => UserProvider(),
-
                   child: const HomeScreen(),
                 ),
             CreateEventScreen.routeName: (_) => const CreateEventScreen(),
           },
-          initialRoute: RegisterScreen.routeName,
+          initialRoute: _getInitialRoute(),
         );
       },
     );
+  }
+
+  String _getInitialRoute() {
+    final user = FirebaseAuth.instance.currentUser;
+    return user != null ? HomeScreen.routeName : LoginScreen.routeName;
   }
 }
