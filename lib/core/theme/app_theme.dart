@@ -31,6 +31,11 @@ class AppTheme {
         fontSize: 20.sp,
         fontWeight: FontWeight.bold,
       ),
+      titleMedium: GoogleFonts.inter(
+        color: backgroundLight,
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w500,
+      ),
       headlineLarge: GoogleFonts.inter(
         color: backgroundLight,
         fontSize: 24.sp,
