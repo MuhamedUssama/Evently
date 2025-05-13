@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
 class MapsTabProvider extends ChangeNotifier {
   Location location = Location();
-  String locationMessage = '';
 
-  MapsTabProvider() {
-    getLocation();
-  }
+  late GoogleMapController googleMapController;
+
+  CameraPosition cameraPosition = const CameraPosition(
+    target: LatLng(37.42796133580664, -122.085749655962),
+    zoom: 14.4746,
+  );
+
+  Set<Marker> markers = {};
 
   Future<bool> _getLocationPermissioin() async {
     PermissionStatus permissionStatus;
@@ -34,26 +39,51 @@ class MapsTabProvider extends ChangeNotifier {
   Future<void> getLocation() async {
     bool permissionGranted = await _getLocationPermissioin();
     if (!permissionGranted) {
-      locationMessage = 'Location Permission denied';
-      notifyListeners();
       return;
     }
 
     bool serviceEnabled = await _checkLocationService();
     if (!serviceEnabled) {
-      locationMessage = 'Location service disabled';
-      notifyListeners();
       return;
     }
 
-    locationMessage =
-        'Location service enabled and now we are getting location';
-    notifyListeners();
-
     LocationData locationData = await location.getLocation();
 
-    locationMessage =
-        'Location: ${locationData.latitude}, ${locationData.longitude}';
+    changeLocationOnMap(locationData);
+
     notifyListeners();
+  }
+
+  void changeLocationOnMap(LocationData locationData) {
+    cameraPosition = CameraPosition(
+      target: LatLng(locationData.latitude ?? 0, locationData.longitude ?? 0),
+      zoom: 14.4746,
+    );
+
+    markers.add(
+      Marker(
+        markerId: MarkerId('1'),
+        position: LatLng(
+          locationData.latitude ?? 0,
+          locationData.longitude ?? 0,
+        ),
+        infoWindow: InfoWindow(title: 'User Location'),
+      ),
+    );
+
+    googleMapController.animateCamera(
+      CameraUpdate.newCameraPosition(cameraPosition),
+    );
+
+    notifyListeners();
+  }
+
+  void setLocationListener() {
+    location.changeSettings(accuracy: LocationAccuracy.high, interval: 1000);
+
+    location.onLocationChanged.listen((LocationData currentLocation) {
+      changeLocationOnMap(currentLocation);
+      notifyListeners();
+    });
   }
 }
