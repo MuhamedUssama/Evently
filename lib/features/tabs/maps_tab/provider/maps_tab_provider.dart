@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:evently/core/models/event_model.dart';
 import 'package:evently/core/services/firebase_services.dart';
 import 'package:flutter/material.dart';
@@ -24,10 +22,25 @@ class MapsTabProvider extends ChangeNotifier {
   Set<Marker> markers = {};
 
   List<Event> events = [];
+  Map<String, Map<String, String>> locationData = {};
 
   Future<void> getEvents() async {
     events = await FirebaseServices.getEventsFromFireStore('1');
+    for (Event event in events) {
+      await convertLatLongForEvent(event);
+    }
     notifyListeners();
+  }
+
+  Future<void> convertLatLongForEvent(Event event) async {
+    List<geocoding.Placemark> placemarks = await geocoding
+        .placemarkFromCoordinates(event.lat, event.long);
+
+    if (placemarks.isNotEmpty) {
+      String country = placemarks.first.country ?? 'Unknown';
+      String city = placemarks.first.locality ?? 'Unknown';
+      locationData[event.id] = {'city': city, 'country': country};
+    }
   }
 
   Future<bool> _getLocationPermissioin() async {
@@ -119,24 +132,5 @@ class MapsTabProvider extends ChangeNotifier {
     );
 
     notifyListeners();
-  }
-
-  String? country;
-  String? city;
-
-  Future<void> convertLatLong(LatLng latLng) async {
-    try {
-      List<geocoding.Placemark> placemarks = await geocoding
-          .placemarkFromCoordinates(latLng.latitude, latLng.longitude);
-
-      if (placemarks.isNotEmpty) {
-        country = placemarks.first.country ?? 'Canot find country';
-        city = placemarks.first.locality ?? 'Canot find city';
-        log('city: $city');
-        notifyListeners();
-      }
-    } catch (error) {
-      log(error.toString());
-    }
   }
 }

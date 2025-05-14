@@ -3,27 +3,17 @@ import 'package:evently/core/theme/app_theme.dart';
 import 'package:evently/core/widgets/local_cached_image.dart';
 import 'package:evently/features/tabs/maps_tab/provider/maps_tab_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class EventCardItem extends StatefulWidget {
+class EventCardItem extends StatelessWidget {
   final Event event;
   final MapsTabProvider provider;
 
   const EventCardItem({super.key, required this.event, required this.provider});
 
   @override
-  State<EventCardItem> createState() => _EventCardItemState();
-}
-
-class _EventCardItemState extends State<EventCardItem> {
-  @override
-  void initState() {
-    super.initState();
-    widget.provider.convertLatLong(LatLng(widget.event.lat, widget.event.long));
-  }
-
-  @override
   Widget build(BuildContext context) {
+    String city = provider.locationData[event.id]?['city'] ?? 'Loading..';
+    String country = provider.locationData[event.id]?['country'] ?? 'Loading..';
     return Container(
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
@@ -39,7 +29,7 @@ class _EventCardItemState extends State<EventCardItem> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: LocalCachedImage(
-                imagePath: widget.event.category.lightImagePath!,
+                imagePath: event.category.lightImagePath!,
               ),
             ),
           ),
@@ -48,7 +38,7 @@ class _EventCardItemState extends State<EventCardItem> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                widget.event.title,
+                event.title,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   color: AppTheme.primary,
                   fontWeight: FontWeight.bold,
@@ -64,7 +54,7 @@ class _EventCardItemState extends State<EventCardItem> {
                     size: 24,
                   ),
                   Text(
-                    '${widget.provider.city}, ${widget.provider.country}',
+                    '$city, $country',
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       fontSize: 16,
                       color: AppTheme.black,
