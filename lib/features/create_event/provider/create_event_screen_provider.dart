@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:location/location.dart';
+import 'package:geocoding/geocoding.dart' as geocoding;
 
 class CreateEventScreenProvider extends ChangeNotifier {
   int currentIndex = 1;
@@ -23,6 +24,9 @@ class CreateEventScreenProvider extends ChangeNotifier {
   Set<Marker> markers = {};
 
   LatLng? eventLocation;
+
+  String? city;
+  String? country;
 
   CreateEventScreenProvider() {
     getLocation();
@@ -84,6 +88,8 @@ class CreateEventScreenProvider extends ChangeNotifier {
         dateTime: dateTime,
         lat: eventLocation?.latitude ?? 0,
         long: eventLocation?.longitude ?? 0,
+        city: city ?? 'Unknown',
+        country: country ?? 'Unknown',
       );
       await FirebaseServices.addEventToFireStore(event);
     }
@@ -162,6 +168,22 @@ class CreateEventScreenProvider extends ChangeNotifier {
         infoWindow: const InfoWindow(title: 'Event Location'),
       ),
     );
+    notifyListeners();
+  }
+
+  Future<void> convertLatLongForEvent() async {
+    if (eventLocation == null) return;
+
+    List<geocoding.Placemark> placemarks = await geocoding
+        .placemarkFromCoordinates(
+          eventLocation!.latitude,
+          eventLocation!.longitude,
+        );
+
+    if (placemarks.isNotEmpty) {
+      city = placemarks.first.locality ?? 'Unknown';
+      country = placemarks.first.country ?? 'Unknown';
+    }
     notifyListeners();
   }
 }

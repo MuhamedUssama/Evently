@@ -12,8 +12,8 @@ class EventCardItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String city = provider.locationData[event.id]?['city'] ?? 'Loading..';
-    String country = provider.locationData[event.id]?['country'] ?? 'Loading..';
+    // String city = provider.locationData[event.id]?['city'] ?? 'Loading..';
+    // String country = provider.locationData[event.id]?['country'] ?? 'Loading..';
     return Container(
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
@@ -53,13 +53,13 @@ class EventCardItem extends StatelessWidget {
                     color: AppTheme.black,
                     size: 24,
                   ),
-                  Text(
-                    '$city, $country',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontSize: 16,
-                      color: AppTheme.black,
-                    ),
-                  ),
+                  // Text(
+                  //   '$city, $country',
+                  //   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  //     fontSize: 16,
+                  //     color: AppTheme.black,
+                  //   ),
+                  // ),
                 ],
               ),
             ],
