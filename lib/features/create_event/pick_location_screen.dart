@@ -21,8 +21,11 @@ class PickLocationScreen extends StatelessWidget {
               },
               mapType: MapType.normal,
               markers: provider.markers,
-              onTap: (latLag) {
+              onTap: (latLag) async {
                 provider.changeLocation(latLag);
+                await provider.convertLatLongForEvent();
+
+                // ignore: use_build_context_synchronously
                 Navigator.pop(context);
               },
             ),

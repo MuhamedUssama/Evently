@@ -48,7 +48,7 @@ class ChooseLocationButton extends StatelessWidget {
                   child: Text(
                     provider.eventLocation == null
                         ? 'Choose Event Location'
-                        : 'Location: ${provider.eventLocation?.latitude.floor()}, ${provider.eventLocation?.longitude.floor()}',
+                        : 'Location: ${provider.city}, ${provider.country}',
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       fontSize: 16.sp,
                       color: AppTheme.primary,

@@ -12,6 +12,8 @@ class Event {
   DateTime dateTime;
   double lat;
   double long;
+  String city;
+  String country;
 
   Event({
     this.id = '',
@@ -22,6 +24,8 @@ class Event {
     required this.userId,
     this.lat = 0.0,
     this.long = 0.0,
+    this.city = 'Unknown',
+    this.country = 'Unknown',
   });
 
   Map<String, dynamic> toJson() => {
@@ -33,6 +37,8 @@ class Event {
     'userId': userId,
     'lat': lat,
     'long': long,
+    'city': city,
+    'country': country,
   };
 
   Event.fromJson(Map<String, dynamic> json)
@@ -47,5 +53,7 @@ class Event {
         userId: json['userId'],
         lat: json['lat'] ?? 37.42796133580664,
         long: json['long'] ?? -122.085749655962,
+        city: json['city'] ?? 'Unknown',
+        country: json['country'] ?? 'Unknown',
       );
 }

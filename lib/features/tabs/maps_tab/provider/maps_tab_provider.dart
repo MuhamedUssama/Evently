@@ -1,9 +1,7 @@
-import 'dart:developer';
-
 import 'package:evently/core/models/event_model.dart';
 import 'package:evently/core/services/firebase_services.dart';
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart' as geocoding;
+// import 'package:geocoding/geocoding.dart' as geocoding;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
@@ -27,6 +25,7 @@ class MapsTabProvider extends ChangeNotifier {
 
   Future<void> getEvents() async {
     events = await FirebaseServices.getEventsFromFireStore('1');
+
     notifyListeners();
   }
 
@@ -119,24 +118,5 @@ class MapsTabProvider extends ChangeNotifier {
     );
 
     notifyListeners();
-  }
-
-  String? country;
-  String? city;
-
-  Future<void> convertLatLong(LatLng latLng) async {
-    try {
-      List<geocoding.Placemark> placemarks = await geocoding
-          .placemarkFromCoordinates(latLng.latitude, latLng.longitude);
-
-      if (placemarks.isNotEmpty) {
-        country = placemarks.first.country ?? 'Canot find country';
-        city = placemarks.first.locality ?? 'Canot find city';
-        log('city: $city');
-        notifyListeners();
-      }
-    } catch (error) {
-      log(error.toString());
-    }
   }
 }
