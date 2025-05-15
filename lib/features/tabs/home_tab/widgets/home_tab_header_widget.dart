@@ -63,7 +63,7 @@ class HomeTabHeaderWidget extends StatelessWidget {
                     children: [
                       SvgPicture.asset(AppIcons.maps),
                       Text(
-                        '${provider.city}, ${provider.country}',
+                        '${provider.city ?? 'Unknown'}, ${provider.country ?? 'Unknown'}',
                         style: Theme.of(context).textTheme.titleSmall,
                       ),
                     ],

@@ -81,7 +81,7 @@ class HomeTabProvider with ChangeNotifier {
       country = placemarks.first.country ?? 'Canot find country';
       city = placemarks.first.locality ?? 'Canot find city';
       log('country: $country');
-      notifyListeners();
+      log('city: $city');
     }
 
     notifyListeners();

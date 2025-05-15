@@ -22,26 +22,12 @@ class MapsTabProvider extends ChangeNotifier {
   Set<Marker> markers = {};
 
   List<Event> events = [];
-  // Map<String, Map<String, String>> locationData = {};
 
   Future<void> getEvents() async {
     events = await FirebaseServices.getEventsFromFireStore('1');
-    // for (Event event in events) {
-    //   await convertLatLongForEvent(event);
-    // }
+
     notifyListeners();
   }
-
-  // Future<void> convertLatLongForEvent(Event event) async {
-  //   List<geocoding.Placemark> placemarks = await geocoding
-  //       .placemarkFromCoordinates(event.lat, event.long);
-
-  //   if (placemarks.isNotEmpty) {
-  //     String country = placemarks.first.country ?? 'Unknown';
-  //     String city = placemarks.first.locality ?? 'Unknown';
-  //     locationData[event.id] = {'city': city, 'country': country};
-  //   }
-  // }
 
   Future<bool> _getLocationPermissioin() async {
     PermissionStatus permissionStatus;
