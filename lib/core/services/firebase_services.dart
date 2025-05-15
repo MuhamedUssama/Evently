@@ -112,4 +112,20 @@ class FirebaseServices {
       log('Error signing out: $error');
     }
   }
+
+  static Future<void> addEventToFavourate(String eventId) async {
+    CollectionReference<UserModel> userCollection = getUsersCollection();
+    String userId = FirebaseAuth.instance.currentUser!.uid;
+    await userCollection.doc(userId).update({
+      'favourateEventsIds': FieldValue.arrayUnion([eventId]),
+    });
+  }
+
+  static Future<void> removeEventFromFavourate(String eventId) async {
+    CollectionReference<UserModel> userCollection = getUsersCollection();
+    String userId = FirebaseAuth.instance.currentUser!.uid;
+    await userCollection.doc(userId).update({
+      'favourateEventsIds': FieldValue.arrayRemove([eventId]),
+    });
+  }
 }

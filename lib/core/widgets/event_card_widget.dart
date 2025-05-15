@@ -1,17 +1,27 @@
 import 'package:evently/core/models/event_model.dart';
+import 'package:evently/core/providers/user_provider.dart';
 import 'package:evently/core/theme/app_theme.dart';
 import 'package:evently/core/widgets/local_cached_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
-class EventCardWidget extends StatelessWidget {
+class EventCardWidget extends StatefulWidget {
   final Event event;
 
   const EventCardWidget({super.key, required this.event});
 
   @override
+  State<EventCardWidget> createState() => _EventCardWidgetState();
+}
+
+class _EventCardWidgetState extends State<EventCardWidget> {
+  @override
   Widget build(BuildContext context) {
+    UserProvider provider = Provider.of<UserProvider>(context, listen: false);
+    bool isFavourite = provider.checkIsEventFavourite(widget.event.id);
+
     return Stack(
       children: [
         ClipRRect(
@@ -19,7 +29,7 @@ class EventCardWidget extends StatelessWidget {
           child: LocalCachedImage(
             height: 200.h,
             width: double.infinity,
-            imagePath: event.category.lightImagePath!,
+            imagePath: widget.event.category.lightImagePath!,
           ),
         ),
         Positioned.fill(
@@ -39,11 +49,11 @@ class EventCardWidget extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      '${event.dateTime.day}',
+                      '${widget.event.dateTime.day}',
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                     Text(
-                      DateFormat('MMM').format(event.dateTime),
+                      DateFormat('MMM').format(widget.event.dateTime),
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: AppTheme.primary,
                         fontWeight: FontWeight.w700,
@@ -65,16 +75,26 @@ class EventCardWidget extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        event.description,
+                        widget.event.description,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           fontWeight: FontWeight.w700,
                         ),
                       ),
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () async {
+                        if (isFavourite) {
+                          provider.removeEventFromFavourates(widget.event.id);
+                        } else {
+                          provider.addEventToFavourates(widget.event.id);
+                        }
+
+                        setState(() {});
+                      },
                       child: Icon(
-                        Icons.favorite_outline_sharp,
+                        isFavourite
+                            ? Icons.favorite
+                            : Icons.favorite_outline_sharp,
                         color: AppTheme.primary,
                       ),
                     ),
