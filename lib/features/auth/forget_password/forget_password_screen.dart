@@ -1,4 +1,3 @@
-import 'package:evently/core/theme/app_theme.dart';
 import 'package:evently/core/utils/app_assets.dart';
 import 'package:evently/core/utils/app_validator.dart';
 import 'package:evently/core/widgets/custom_button.dart';
@@ -18,9 +17,7 @@ class ForgetPasswordScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Forget Password'),
-        titleTextStyle: Theme.of(
-          context,
-        ).appBarTheme.titleTextStyle?.copyWith(color: AppTheme.black),
+        titleTextStyle: Theme.of(context).appBarTheme.titleTextStyle,
       ),
       body: ChangeNotifierProvider(
         create: (context) => ForgetPasswordProvider(),
