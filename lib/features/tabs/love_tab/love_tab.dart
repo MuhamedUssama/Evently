@@ -16,12 +16,12 @@ class LoveTab extends StatelessWidget {
       child: SafeArea(
         child: Padding(
           padding: EdgeInsets.only(left: 16.w, right: 16.w, top: 16.h),
-          child: Column(
-            children: [
-              CustomSearchTextField(controller: TextEditingController()),
-              Consumer<LoveTabProvider>(
-                builder: (context, provider, child) {
-                  return Expanded(
+          child: Consumer<LoveTabProvider>(
+            builder: (context, provider, child) {
+              return Column(
+                children: [
+                  CustomSearchTextField(provider: provider),
+                  Expanded(
                     child: RefreshIndicator(
                       color: AppTheme.primary,
                       onRefresh: () => provider.getFavoriteEvents(),
@@ -29,19 +29,19 @@ class LoveTab extends StatelessWidget {
                         padding: EdgeInsets.symmetric(vertical: 16.h),
                         itemBuilder: (context, index) {
                           return EventCardWidget(
-                            event: provider.favoriteEvents[index],
+                            event: provider.filteredFavoriteEvents[index],
                           );
                         },
                         separatorBuilder: (context, index) {
                           return SizedBox(height: 16.h);
                         },
-                        itemCount: provider.favoriteEvents.length,
+                        itemCount: provider.filteredFavoriteEvents.length,
                       ),
                     ),
-                  );
-                },
-              ),
-            ],
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),
