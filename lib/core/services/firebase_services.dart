@@ -128,4 +128,23 @@ class FirebaseServices {
       'favourateEventsIds': FieldValue.arrayRemove([eventId]),
     });
   }
+
+  static Future<List<Event>> getFavoriteEvents() async {
+    User? currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser == null) return [];
+
+    CollectionReference<UserModel> usersCollection = getUsersCollection();
+    DocumentSnapshot<UserModel> userDoc =
+        await usersCollection.doc(currentUser.uid).get();
+    UserModel? user = userDoc.data();
+    if (user == null || user.favourateEventsIds.isEmpty) return [];
+
+    CollectionReference<Event> eventsCollection = getEventsCollection();
+    QuerySnapshot<Event> querySnapshot =
+        await eventsCollection
+            .where(FieldPath.documentId, whereIn: user.favourateEventsIds)
+            .get();
+
+    return querySnapshot.docs.map((event) => event.data()).toList();
+  }
 }
