@@ -17,4 +17,22 @@ class UserProvider with ChangeNotifier {
     log('Current user id: ${currentUser?.id}');
     notifyListeners();
   }
+
+  bool checkIsEventFavourite(String eventId) {
+    return currentUser!.favourateEventsIds.contains(eventId);
+  }
+
+  Future<void> addEventToFavourates(String eventId) async {
+    if (currentUser != null) {
+      currentUser!.favourateEventsIds.add(eventId);
+      await FirebaseServices.addEventToFavourate(eventId);
+    }
+  }
+
+  Future<void> removeEventFromFavourates(String eventId) async {
+    if (currentUser != null) {
+      currentUser!.favourateEventsIds.remove(eventId);
+      await FirebaseServices.removeEventFromFavourate(eventId);
+    }
+  }
 }

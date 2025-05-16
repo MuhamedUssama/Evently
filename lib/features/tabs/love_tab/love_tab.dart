@@ -1,4 +1,5 @@
-// import 'package:evently/core/widgets/event_card_widget.dart';
+import 'package:evently/core/theme/app_theme.dart';
+import 'package:evently/core/widgets/event_card_widget.dart';
 import 'package:evently/features/tabs/love_tab/provider/love_tab_provider.dart';
 import 'package:evently/features/tabs/love_tab/widgets/custom_search_textfield.dart';
 import 'package:flutter/material.dart';
@@ -15,18 +16,32 @@ class LoveTab extends StatelessWidget {
       child: SafeArea(
         child: Padding(
           padding: EdgeInsets.only(left: 16.w, right: 16.w, top: 16.h),
-          child: Column(
-            spacing: 16,
-            children: [
-              CustomSearchTextField(controller: TextEditingController()),
-              // Expanded(
-              //   child: ListView.separated(
-              //     itemBuilder: (context, index) => EventCardWidget(),
-              //     separatorBuilder: (context, index) => SizedBox(height: 16.h),
-              //     itemCount: 5,
-              //   ),
-              // ),
-            ],
+          child: Consumer<LoveTabProvider>(
+            builder: (context, provider, child) {
+              return Column(
+                children: [
+                  CustomSearchTextField(provider: provider),
+                  Expanded(
+                    child: RefreshIndicator(
+                      color: AppTheme.primary,
+                      onRefresh: () => provider.getFavoriteEvents(),
+                      child: ListView.separated(
+                        padding: EdgeInsets.symmetric(vertical: 16.h),
+                        itemBuilder: (context, index) {
+                          return EventCardWidget(
+                            event: provider.filteredFavoriteEvents[index],
+                          );
+                        },
+                        separatorBuilder: (context, index) {
+                          return SizedBox(height: 16.h);
+                        },
+                        itemCount: provider.filteredFavoriteEvents.length,
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),
