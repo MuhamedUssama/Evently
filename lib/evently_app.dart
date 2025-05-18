@@ -39,7 +39,7 @@ class EventlyApp extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
           ],
           supportedLocales: [Locale('en'), Locale('ar')],
-          locale: Locale('en'),
+          locale: Locale(provider.languageCode),
           routes: {
             OnBoringScreen.routeName: (_) => const OnBoringScreen(),
             LoginScreen.routeName: (_) => const LoginScreen(),
