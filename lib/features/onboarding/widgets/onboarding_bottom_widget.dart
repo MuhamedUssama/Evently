@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:evently/core/cache/shared_preferences.dart';
 import 'package:evently/features/auth/login/login_screen.dart';
 import 'package:evently/features/onboarding/model/onboarding_model.dart';
 import 'package:evently/features/onboarding/providers/onboarding_provider.dart';
@@ -49,6 +50,10 @@ class OnboardingBottomWidget extends StatelessWidget {
               onPressed: () {
                 provider.nextPage();
                 log('index: ${provider.currentPage}');
+                SharedPreferencesHelper.saveData(
+                  key: 'onBoarding',
+                  value: true,
+                );
                 if (provider.currentPage > 2) {
                   Navigator.pushReplacementNamed(
                     context,
