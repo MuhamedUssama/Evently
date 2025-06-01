@@ -1,3 +1,4 @@
+import 'package:evently/core/cache/shared_preferences.dart';
 import 'package:evently/core/providers/settings_provider.dart';
 import 'package:evently/core/providers/user_provider.dart';
 import 'package:evently/features/auth/forget_password/forget_password_screen.dart';
@@ -71,7 +72,11 @@ class EventlyApp extends StatelessWidget {
   }
 
   String _getInitialRoute() {
-    final user = FirebaseAuth.instance.currentUser;
-    return user != null ? HomeScreen.routeName : LoginScreen.routeName;
+    if (SharedPreferencesHelper.getBool(key: 'onBoarding')) {
+      final user = FirebaseAuth.instance.currentUser;
+      return user != null ? HomeScreen.routeName : LoginScreen.routeName;
+    } else {
+      return OnBoringScreen.routeName;
+    }
   }
 }
