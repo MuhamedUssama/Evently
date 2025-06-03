@@ -67,7 +67,12 @@ class EventlyApp extends StatelessWidget {
                   ],
                   child: const HomeScreen(),
                 ),
-            CreateEventScreen.routeName: (_) => const CreateEventScreen(),
+            CreateEventScreen.routeName: (context) {
+              Event? event =
+                  ModalRoute.of(context)?.settings.arguments as Event?;
+
+              return CreateEventScreen(event: event);
+            },
             PickLocationScreen.routeName: (context) {
               CreateEventScreenProvider provider =
                   ModalRoute.of(context)?.settings.arguments
