@@ -23,6 +23,8 @@ class CreateEventScreenProvider extends ChangeNotifier {
 
   Set<Marker> markers = {};
 
+  Event? eventModel;
+
   LatLng? eventLocation;
 
   String? city;
@@ -185,5 +187,48 @@ class CreateEventScreenProvider extends ChangeNotifier {
       country = placemarks.first.country ?? 'Unknown';
     }
     notifyListeners();
+  }
+
+  void initEventData(Event? event) {
+    if (event != null) {
+      eventModel = event;
+      titleController.text = event.title;
+      descriptionController.text = event.description;
+      selectedDate = event.dateTime;
+      timeOfDay = TimeOfDay.fromDateTime(event.dateTime);
+      eventLocation = LatLng(event.lat, event.long);
+      city = event.city;
+      country = event.country;
+      currentIndex = CategoryTabModel.tabs.indexWhere(
+        (tab) => tab.id == event.category.id,
+      );
+    }
+  }
+
+  Future<void> updateEvent() async {
+    if (formKey.currentState!.validate() &&
+        selectedDate != null &&
+        timeOfDay != null &&
+        eventLocation != null) {
+      DateTime dateTime = DateTime(
+        selectedDate!.year,
+        selectedDate!.month,
+        selectedDate!.day,
+        timeOfDay!.hour,
+        timeOfDay!.minute,
+      );
+
+      eventModel?.userId = FirebaseAuth.instance.currentUser?.uid ?? '';
+      eventModel?.category = CategoryTabModel.tabs[currentIndex];
+      eventModel?.title = titleController.text;
+      eventModel?.description = descriptionController.text;
+      eventModel?.dateTime = dateTime;
+      eventModel?.lat = eventLocation?.latitude ?? 0;
+      eventModel?.long = eventLocation?.longitude ?? 0;
+      eventModel?.city = city ?? 'Unknown';
+      eventModel?.country = country ?? 'Unknown';
+
+      await FirebaseServices.updateEvent(eventModel!);
+    }
   }
 }
