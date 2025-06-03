@@ -1,4 +1,5 @@
 import 'package:evently/core/cache/shared_preferences.dart';
+import 'package:evently/core/models/event_model.dart';
 import 'package:evently/core/providers/settings_provider.dart';
 import 'package:evently/core/providers/user_provider.dart';
 import 'package:evently/features/auth/forget_password/forget_password_screen.dart';
@@ -6,6 +7,8 @@ import 'package:evently/features/auth/register/register_screen.dart';
 import 'package:evently/features/create_event/create_event_screen.dart';
 import 'package:evently/features/create_event/pick_location_screen.dart';
 import 'package:evently/features/create_event/provider/create_event_screen_provider.dart';
+import 'package:evently/features/event_details/event_details_screen.dart';
+import 'package:evently/features/event_details/provider/event_details_provider.dart';
 import 'package:evently/features/home/home_screen.dart';
 import 'package:evently/features/tabs/maps_tab/provider/maps_tab_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -46,6 +49,7 @@ class EventlyApp extends StatelessWidget {
             LoginScreen.routeName: (_) => const LoginScreen(),
             RegisterScreen.routeName: (_) => const RegisterScreen(),
             ForgetPasswordScreen.routeName: (_) => const ForgetPasswordScreen(),
+            CreateEventScreen.routeName: (_) => const CreateEventScreen(),
             HomeScreen.routeName:
                 (_) => MultiProvider(
                   providers: [
@@ -56,13 +60,19 @@ class EventlyApp extends StatelessWidget {
                   ],
                   child: const HomeScreen(),
                 ),
-            CreateEventScreen.routeName: (_) => const CreateEventScreen(),
             PickLocationScreen.routeName: (context) {
               CreateEventScreenProvider provider =
                   ModalRoute.of(context)?.settings.arguments
                       as CreateEventScreenProvider;
 
               return PickLocationScreen(provider: provider);
+            },
+            EventDetailsScreen.routeName: (context) {
+              Event event = ModalRoute.of(context)?.settings.arguments as Event;
+              return ChangeNotifierProvider(
+                create: (context) => EventDetailsProvider(),
+                child: EventDetailsScreen(event: event),
+              );
             },
           },
           initialRoute: _getInitialRoute(),

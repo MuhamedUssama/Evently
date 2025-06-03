@@ -147,4 +147,9 @@ class FirebaseServices {
 
     return querySnapshot.docs.map((event) => event.data()).toList();
   }
+
+  static Future<void> deleteEvent(String eventId) async {
+    CollectionReference<Event> eventsCollection = getEventsCollection();
+    await eventsCollection.doc(eventId).delete();
+  }
 }
