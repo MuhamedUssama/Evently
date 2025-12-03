@@ -49,7 +49,11 @@ class EventlyApp extends StatelessWidget {
             LoginScreen.routeName: (_) => const LoginScreen(),
             RegisterScreen.routeName: (_) => const RegisterScreen(),
             ForgetPasswordScreen.routeName: (_) => const ForgetPasswordScreen(),
-            CreateEventScreen.routeName: (_) => const CreateEventScreen(),
+            CreateEventScreen.routeName: (context) {
+              Event? event =
+                  ModalRoute.of(context)?.settings.arguments as Event?;
+              return CreateEventScreen(event: event);
+            },
             HomeScreen.routeName:
                 (_) => MultiProvider(
                   providers: [

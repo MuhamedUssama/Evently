@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:evently/core/models/category_tab_model.dart';
+import 'package:evently/core/models/event_model.dart';
 import 'package:evently/core/theme/app_theme.dart';
 import 'package:evently/core/widgets/custom_button.dart';
 import 'package:evently/features/create_event/pick_location_screen.dart';
@@ -14,18 +15,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-class CreateEventScreen extends StatelessWidget {
+class CreateEventScreen extends StatefulWidget {
   static const String routeName = '/createEvent';
-  const CreateEventScreen({super.key});
+  final Event? event;
+  const CreateEventScreen({super.key, this.event});
+
+  @override
+  State<CreateEventScreen> createState() => _CreateEventScreenState();
+}
+
+class _CreateEventScreenState extends State<CreateEventScreen> {
+  CreateEventScreenProvider provider = CreateEventScreenProvider();
+  @override
+  void initState() {
+    super.initState();
+    provider.initEventData(widget.event);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => CreateEventScreenProvider(),
-
+    return ChangeNotifierProvider.value(
+      value: provider,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Create Event'),
+          title: Text(widget.event == null ? 'Create Event' : 'Edit Event'),
           leading: IconButton(
             onPressed: () => Navigator.pop(context),
             icon: Icon(Icons.arrow_back_rounded, color: AppTheme.primary),
@@ -57,6 +70,7 @@ class CreateEventScreen extends StatelessWidget {
                           isSelected:
                               provider.currentIndex ==
                               index + provider.startIndex,
+
                           onTap: () {
                             provider.onCategoryClicked(index);
                           },
@@ -144,17 +158,30 @@ class CreateEventScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 16),
                         CustomButton(
-                          text: 'Add Event',
+                          text:
+                              widget.event == null
+                                  ? 'Add Event'
+                                  : 'Update Event',
                           onPressed: () {
-                            provider
-                                .createEvent()
-                                .then((_) {
-                                  // ignore: use_build_context_synchronously
-                                  Navigator.pop(context);
-                                })
-                                .catchError((_) {
-                                  log('Faild to create event');
-                                });
+                            widget.event == null
+                                ? provider
+                                    .createEvent()
+                                    .then((_) {
+                                      // ignore: use_build_context_synchronously
+                                      Navigator.pop(context);
+                                    })
+                                    .catchError((_) {
+                                      log('Faild to create event');
+                                    })
+                                : provider
+                                    .updateEvent()
+                                    .then((_) {
+                                      // ignore: use_build_context_synchronously
+                                      Navigator.pop(context);
+                                    })
+                                    .catchError((_) {
+                                      log('Faild to update event');
+                                    });
                           },
                         ),
                         const SizedBox(height: 24),

@@ -152,4 +152,9 @@ class FirebaseServices {
     CollectionReference<Event> eventsCollection = getEventsCollection();
     await eventsCollection.doc(eventId).delete();
   }
+
+  static Future<void> updateEvent(Event event) async {
+    CollectionReference<Event> eventsCollection = getEventsCollection();
+    await eventsCollection.doc(event.id).update(event.toJson());
+  }
 }

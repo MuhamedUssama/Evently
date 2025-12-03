@@ -2,6 +2,7 @@ import 'package:evently/core/models/event_model.dart';
 import 'package:evently/core/services/firebase_services.dart';
 import 'package:evently/core/theme/app_theme.dart';
 import 'package:evently/core/widgets/local_cached_image.dart';
+import 'package:evently/features/create_event/create_event_screen.dart';
 import 'package:evently/features/event_details/widgets/location_card_widget.dart';
 import 'package:evently/features/event_details/widgets/time_date_card_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -22,7 +23,16 @@ class EventDetailsScreen extends StatelessWidget {
         actions: [
           Visibility(
             visible: FirebaseAuth.instance.currentUser?.uid == event.userId,
-            child: IconButton(onPressed: () {}, icon: Icon(Icons.edit)),
+            child: IconButton(
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  CreateEventScreen.routeName,
+                  arguments: event,
+                );
+              },
+              icon: Icon(Icons.edit),
+            ),
           ),
           Visibility(
             visible: FirebaseAuth.instance.currentUser?.uid == event.userId,

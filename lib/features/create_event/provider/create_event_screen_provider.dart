@@ -12,6 +12,8 @@ class CreateEventScreenProvider extends ChangeNotifier {
   int currentIndex = 1;
   int startIndex = 1;
 
+  Event? eventModel;
+
   Location location = Location();
 
   late GoogleMapController googleMapController;
@@ -55,6 +57,7 @@ class CreateEventScreenProvider extends ChangeNotifier {
 
   void onCategoryClicked(int index) {
     currentIndex = index + startIndex;
+
     notifyListeners();
   }
 
@@ -161,6 +164,11 @@ class CreateEventScreenProvider extends ChangeNotifier {
 
   void changeLocation(LatLng latLng) {
     eventLocation = latLng;
+    cameraPosition = CameraPosition(
+      target: LatLng(latLng.latitude, latLng.longitude),
+      zoom: 14.4746,
+    );
+    markers.clear();
     markers.add(
       Marker(
         markerId: const MarkerId('2'),
@@ -168,6 +176,11 @@ class CreateEventScreenProvider extends ChangeNotifier {
         infoWindow: const InfoWindow(title: 'Event Location'),
       ),
     );
+
+    googleMapController.animateCamera(
+      CameraUpdate.newCameraPosition(cameraPosition),
+    );
+
     notifyListeners();
   }
 
@@ -185,5 +198,49 @@ class CreateEventScreenProvider extends ChangeNotifier {
       country = placemarks.first.country ?? 'Unknown';
     }
     notifyListeners();
+  }
+
+  void initEventData(Event? event) {
+    if (event != null) {
+      eventModel = event;
+      titleController.text = event.title;
+      descriptionController.text = event.description;
+      selectedDate = event.dateTime;
+      timeOfDay = TimeOfDay.fromDateTime(event.dateTime);
+      eventLocation = LatLng(event.lat, event.long);
+      city = event.city;
+      country = event.country;
+      currentIndex = CategoryTabModel.tabs.indexWhere(
+        (tab) => tab.id == event.category.id,
+      );
+    }
+    notifyListeners();
+  }
+
+  Future<void> updateEvent() async {
+    if (formKey.currentState!.validate() &&
+        selectedDate != null &&
+        timeOfDay != null &&
+        eventLocation != null) {
+      DateTime dateTime = DateTime(
+        selectedDate!.year,
+        selectedDate!.month,
+        selectedDate!.day,
+        timeOfDay!.hour,
+        timeOfDay!.minute,
+      );
+
+      eventModel!.userId = FirebaseAuth.instance.currentUser!.uid;
+      eventModel!.category = CategoryTabModel.tabs[currentIndex];
+      eventModel!.title = titleController.text;
+      eventModel!.description = descriptionController.text;
+      eventModel!.dateTime = dateTime;
+      eventModel!.lat = eventLocation?.latitude ?? 0;
+      eventModel!.long = eventLocation?.longitude ?? 0;
+      eventModel!.city = city ?? 'Unknown';
+      eventModel!.country = country ?? 'Unknown';
+
+      await FirebaseServices.updateEvent(eventModel!);
+    }
   }
 }
