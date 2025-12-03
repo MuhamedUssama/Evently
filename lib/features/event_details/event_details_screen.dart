@@ -41,7 +41,7 @@ class EventDetailsScreen extends StatelessWidget {
                 await FirebaseServices.deleteEvent(event.id);
 
                 // ignore: use_build_context_synchronously
-                Navigator.of(context).pop();
+                Navigator.pop(context);
               },
               icon: Icon(Icons.delete, color: Colors.red),
             ),
@@ -84,17 +84,17 @@ class EventDetailsScreen extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(16.r),
                 child: GoogleMap(
-                  zoomControlsEnabled: false,
                   scrollGesturesEnabled: false,
+                  zoomControlsEnabled: false,
                   zoomGesturesEnabled: false,
-                  tiltGesturesEnabled: false,
+                  rotateGesturesEnabled: false,
                   initialCameraPosition: CameraPosition(
                     target: LatLng(event.lat, event.long),
-                    zoom: 14,
+                    zoom: 14.0,
                   ),
                   markers: {
                     Marker(
-                      markerId: MarkerId('1'),
+                      markerId: MarkerId('event_location'),
                       position: LatLng(event.lat, event.long),
                       infoWindow: InfoWindow(
                         title: event.title,

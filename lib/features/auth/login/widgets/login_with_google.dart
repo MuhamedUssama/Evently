@@ -1,5 +1,8 @@
+import 'package:evently/core/services/firebase_services.dart';
 import 'package:evently/core/theme/app_theme.dart';
 import 'package:evently/core/utils/app_assets.dart';
+import 'package:evently/features/home/home_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -10,7 +13,13 @@ class LoginWithGoogle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
-      onPressed: () {},
+      onPressed: () async {
+        await FirebaseServices.signInWithGoogle();
+        if (FirebaseAuth.instance.currentUser != null) {
+          // ignore: use_build_context_synchronously
+          Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+        }
+      },
       style: OutlinedButton.styleFrom(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         foregroundColor: Theme.of(context).primaryColor,

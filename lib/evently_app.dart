@@ -49,11 +49,6 @@ class EventlyApp extends StatelessWidget {
             LoginScreen.routeName: (_) => const LoginScreen(),
             RegisterScreen.routeName: (_) => const RegisterScreen(),
             ForgetPasswordScreen.routeName: (_) => const ForgetPasswordScreen(),
-            CreateEventScreen.routeName: (context) {
-              Event? event =
-                  ModalRoute.of(context)?.settings.arguments as Event?;
-              return CreateEventScreen(event: event);
-            },
             HomeScreen.routeName:
                 (_) => MultiProvider(
                   providers: [
@@ -64,6 +59,12 @@ class EventlyApp extends StatelessWidget {
                   ],
                   child: const HomeScreen(),
                 ),
+            CreateEventScreen.routeName: (context) {
+              Event? event =
+                  ModalRoute.of(context)?.settings.arguments as Event?;
+
+              return CreateEventScreen(event: event);
+            },
             PickLocationScreen.routeName: (context) {
               CreateEventScreenProvider provider =
                   ModalRoute.of(context)?.settings.arguments

@@ -12,8 +12,6 @@ class CreateEventScreenProvider extends ChangeNotifier {
   int currentIndex = 1;
   int startIndex = 1;
 
-  Event? eventModel;
-
   Location location = Location();
 
   late GoogleMapController googleMapController;
@@ -24,6 +22,8 @@ class CreateEventScreenProvider extends ChangeNotifier {
   );
 
   Set<Marker> markers = {};
+
+  Event? eventModel;
 
   LatLng? eventLocation;
 
@@ -214,7 +214,6 @@ class CreateEventScreenProvider extends ChangeNotifier {
         (tab) => tab.id == event.category.id,
       );
     }
-    notifyListeners();
   }
 
   Future<void> updateEvent() async {
@@ -230,15 +229,15 @@ class CreateEventScreenProvider extends ChangeNotifier {
         timeOfDay!.minute,
       );
 
-      eventModel!.userId = FirebaseAuth.instance.currentUser!.uid;
-      eventModel!.category = CategoryTabModel.tabs[currentIndex];
-      eventModel!.title = titleController.text;
-      eventModel!.description = descriptionController.text;
-      eventModel!.dateTime = dateTime;
-      eventModel!.lat = eventLocation?.latitude ?? 0;
-      eventModel!.long = eventLocation?.longitude ?? 0;
-      eventModel!.city = city ?? 'Unknown';
-      eventModel!.country = country ?? 'Unknown';
+      eventModel?.userId = FirebaseAuth.instance.currentUser?.uid ?? '';
+      eventModel?.category = CategoryTabModel.tabs[currentIndex];
+      eventModel?.title = titleController.text;
+      eventModel?.description = descriptionController.text;
+      eventModel?.dateTime = dateTime;
+      eventModel?.lat = eventLocation?.latitude ?? 0;
+      eventModel?.long = eventLocation?.longitude ?? 0;
+      eventModel?.city = city ?? 'Unknown';
+      eventModel?.country = country ?? 'Unknown';
 
       await FirebaseServices.updateEvent(eventModel!);
     }
