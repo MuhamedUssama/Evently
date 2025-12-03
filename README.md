@@ -90,8 +90,8 @@ To run this project locally, you will need to have the following installed:
 1.  **Clone the repository**:
 
     ```bash
-    git clone https://github.com/your-username/evently.git
-    cd evently
+    git clone https://github.com/MuhamedUssama/Evently.git
+    cd Evently
     ```
 
 2.  **Install dependencies**:
