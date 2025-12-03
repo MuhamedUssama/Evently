@@ -24,22 +24,33 @@ class ForgetPasswordScreen extends StatelessWidget {
         builder: (context, child) {
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w),
-            child: Column(
-              spacing: 24.h,
-              children: [
-                SvgPicture.asset(AppSvgs.forgetPassword),
-                CustomTextFormField(
-                  controller: context.read<ForgetPasswordProvider>().controller,
-                  hintText: 'Email',
-                  keyboardType: TextInputType.emailAddress,
-                  prefixIcon: SvgPicture.asset(
-                    AppIcons.email,
-                    fit: BoxFit.scaleDown,
+            child: Form(
+              key: context.read<ForgetPasswordProvider>().formKey,
+              child: Column(
+                spacing: 24.h,
+                children: [
+                  SvgPicture.asset(AppSvgs.forgetPassword),
+                  CustomTextFormField(
+                    controller:
+                        context.read<ForgetPasswordProvider>().controller,
+                    hintText: 'Email',
+                    keyboardType: TextInputType.emailAddress,
+                    prefixIcon: SvgPicture.asset(
+                      AppIcons.email,
+                      fit: BoxFit.scaleDown,
+                    ),
+                    validator: (value) => AppValidator.validateEmail(value),
                   ),
-                  validator: (value) => AppValidator.validateEmail(value),
-                ),
-                CustomButton(onPressed: () {}, text: 'Reset Password'),
-              ],
+                  CustomButton(
+                    onPressed: () {
+                      context.read<ForgetPasswordProvider>().resetPassword(
+                        context,
+                      );
+                    },
+                    text: 'Reset Password',
+                  ),
+                ],
+              ),
             ),
           );
         },

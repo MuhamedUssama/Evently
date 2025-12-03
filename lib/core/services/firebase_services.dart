@@ -189,4 +189,8 @@ class FirebaseServices {
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .set(userModel);
   }
+
+  static Future<void> resetPassword(String email) async {
+    await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+  }
 }
